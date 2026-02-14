@@ -96,7 +96,10 @@ const Dashboard = () => {
                                             // 2. Format item list
                                             const itemsList = userFiadoSales.map(s => {
                                                 const product = products.find(p => p.id === s.productId);
-                                                return product ? `- ${product.name} (x${s.quantity})` : `- Producto x${s.quantity}`;
+                                                const unitPrice = (s.totalPrice / s.quantity).toFixed(2);
+                                                return product
+                                                    ? `- ${product.name} (x${s.quantity}) - $${unitPrice} c/u`
+                                                    : `- Producto (x${s.quantity}) - $${unitPrice} c/u`;
                                             }).join('\n');
 
                                             const itemsSection = itemsList ? `\n*Detalle (Últimos fiados):*\n${itemsList}\n` : '';
