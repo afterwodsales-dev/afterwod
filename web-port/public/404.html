@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      // Redirect to index.html with the path as hash
+      // This handles direct navigation to routes when using HashRouter
+      const path = window.location.pathname.replace('/afterwod/', '');
+      if (path && path !== '/') {
+        window.location.href = '/afterwod/#/' + path;
+      } else {
+        window.location.href = '/afterwod/';
+      }
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
