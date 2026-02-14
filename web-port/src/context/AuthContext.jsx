@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { db } from '../services/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { seedDatabase } from '../services/seedDatabase';
 
 const AuthContext = createContext();
 
@@ -12,27 +13,25 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Initial Users Data for Auto-Seeding
-    const defaultUsers = [
-        { username: 'alejandro', password: 'lucy931205', role: 'admin', name: 'Alejandro' },
-        { username: 'vanessa', password: 'vane12345', role: 'admin', name: 'Vanessa' }
-    ];
-
-    // Initialize/Seed Users and Check Session
+    // Initialize/Seed Database and Check Session
     useEffect(() => {
         async function initAuth() {
-            // 1. Seed Users (Create if not exist in Firestore)
-            for (const u of defaultUsers) {
-                try {
-                    const userRef = doc(db, 'users', u.username);
-                    const userSnap = await getDoc(userRef);
-                    if (!userSnap.exists()) {
-                        await setDoc(userRef, u);
-                        console.log(`User ${u.username} seeded.`);
+            // 1. Check if database needs seeding (check if users collection exists)
+            try {
+                const userRef = doc(db, 'users', 'alejandro');
+                const userSnap = await getDoc(userRef);
+
+                if (!userSnap.exists()) {
+                    console.log('🌱 Base de datos vacía, ejecutando seed...');
+                    const result = await seedDatabase();
+                    if (result.success) {
+                        console.log('✅ Seed completado');
+                    } else {
+                        console.error('❌ Error en seed:', result.error);
                     }
-                } catch (error) {
-                    console.error("Error seeding user:", error);
                 }
+            } catch (error) {
+                console.error("Error checking/seeding database:", error);
             }
 
             // 2. Recover Session from LocalStorage (Simple Persistence)
