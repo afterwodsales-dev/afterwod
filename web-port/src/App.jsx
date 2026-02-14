@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard';
 import InventoryView from './components/InventoryView';
 import SalesView from './components/SalesView';
 import UsersView from './components/UsersView';
+import CarteraView from './components/CarteraView';
 import HistoryView from './components/HistoryView';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
               <Route path="/inventory" element={<InventoryView />} />
               <Route path="/sales" element={<SalesView />} />
               <Route path="/users" element={<UsersView />} />
+              <Route path="/cartera" element={<CarteraView />} />
               <Route path="/history" element={<HistoryView />} />
             </Route>
 

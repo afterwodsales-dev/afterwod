@@ -9,7 +9,8 @@ import {
     BarChart3,
     Menu,
     X,
-    LogOut
+    LogOut,
+    Wallet
 } from 'lucide-react';
 
 export default function DashboardLayout() {
@@ -38,6 +39,7 @@ export default function DashboardLayout() {
         { path: '/', label: 'Dashboard', icon: BarChart3 },
         { path: '/sales', label: 'Ventas', icon: Calculator },
         { path: '/inventory', label: 'Inventario', icon: Package },
+        { path: '/cartera', label: 'Cartera', icon: Wallet },
         { path: '/users', label: 'Usuarios', icon: UsersIcon },
         { path: '/history', label: 'Historial', icon: History },
     ];
