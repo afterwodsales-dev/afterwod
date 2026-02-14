@@ -5,7 +5,7 @@ import LoadingSpinner from './LoadingSpinner';
 
 const Dashboard = () => {
     const { getFinancialSummary, users, loading } = useStore();
-    const { totalSales, totalPurchases } = getFinancialSummary();
+    const { totalSales, totalPurchases, userStats } = getFinancialSummary();
 
     const debtors = users.filter(u => (u.balance || 0) > 0).sort((a, b) => b.balance - a.balance);
 
