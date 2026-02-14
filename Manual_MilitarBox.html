@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario - Militar Box</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Outfit:wght@700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 4px solid #f97316;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            margin: 0;
+            color: #1a1a1a;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            border-left: 5px solid #f97316;
+            padding-left: 15px;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            margin-top: 40px;
+            color: #1a1a1a;
+        }
+
+        h3 {
+            color: #f97316;
+            font-size: 1.2rem;
+            margin-top: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #f8f8f8;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #1a1a1a;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .highlight-box {
+            background: #fff7ed;
+            border: 1px solid #ffedd5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: #eee;
+        }
+
+        .print-note {
+            background: #1a1a1a;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        @media print {
+            .print-note {
+                display: none;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="print-note">
+        Para guardar como PDF: Presiona <b>Ctrl + P</b> y selecciona <b>"Guardar como PDF"</b>
+    </div>
+
+    <div class="header">
+        <h1>Militar Box v2.0</h1>
+        <div class="subtitle">Manual de Usuario | Edición Web Port</div>
+    </div>
+
+    <p>Este manual describe las funcionalidades principales y cómo operar el sistema de gestión de Militar Box de manera
+        eficiente.</p>
+
+    <h2>🔐 Acceso al Sistema</h2>
+    <p>Utilice las siguientes credenciales para acceder al panel de administración:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Contraseña</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Alejandro</b></td>
+                <td>alejandro</td>
+                <td><code>lucy931205</code></td>
+                <td>Administrador</td>
+            </tr>
+            <tr>
+                <td><b>Vanessa</b></td>
+                <td>vanessa</td>
+                <td><code>vane12345</code></td>
+                <td>Administrador</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>📊 Módulos del Sistema</h2>
+
+    <h3>1. Panel de Control (Dashboard)</h3>
+    <ul>
+        <li><b>Ingresos Hoy</b>: Total acumulado de ventas del día actual.</li>
+        <li><b>Inv. Stock</b>: Valorización del inventario en almacén.</li>
+        <li><b>Balance Bruto</b>: Cálculo rápido de rentabilidad diaria.</li>
+    </ul>
+
+    <h3>2. Ventas (Sales)</h3>
+    <p>Diseñado para una facturación ágil. Permite seleccionar productos, gestionar el carrito y finalizar cobros en
+        efectivo o transferencia.</p>
+    <div class="highlight-box">
+        <b>💡 Tip:</b> Para ventas a crédito, seleccione primero al cliente en la parte inferior para que la deuda se
+        cargue automáticamente a su saldo.
+    </div>
+
+    <h3>3. Inventario (Inventory)</h3>
+    <ul>
+        <li><b>Producto Simple</b>: Gestión individual de stock.</li>
+        <li><b>Producto Compuesto</b>: Permite crear "Recetas" para que al vender un producto (ej. un batido), el
+            sistema descuente automáticamente los ingredientes (proteína, agua, etc.).</li>
+    </ul>
+
+    <h3>4. Usuarios y Cartera (Users)</h3>
+    <p>Gestión completa de deudas de clientes. Permite ver quién debe dinero y registrar "Abonos" que descuentan de su
+        deuda total en tiempo real.</p>
+
+    <h2>📱 Optimización Móvil</h2>
+    <p>El sistema ha sido refinado para su uso en celulares:</p>
+    <ul>
+        <li>Interfaz adaptativa que reemplaza tablas por tarjetas legibles.</li>
+        <li>Modales (ventanas emergentes) optimizados para pantallas táctiles.</li>
+        <li>Navegación fluida y botones de gran tamaño para facilitar la operación en el punto de venta.</li>
+    </ul>
+
+    <div style="margin-top: 100px; text-align: center; font-size: 10px; color: #999;">
+        Documento generado automáticamente por Anti (AI Assistant) para Militar Box.<br>
+        © 2026 Web Port · Afterwd
+    </div>
+</body>
+
+</html>
