@@ -291,6 +291,20 @@ const InventoryView = () => {
                                 />
                             </div>
                         )}
+                    </div>
+                    {/* Stock & Unit */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Stock Inicial / Actual</label>
+                            <input
+                                type="number" step="0.01"
+                                className={`militar-input ${formData.type === 'PRODUCTO COMPUESTO' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                value={formData.stock}
+                                onChange={e => setFormData({ ...formData, stock: e.target.value })}
+                                disabled={formData.type === 'PRODUCTO COMPUESTO'}
+                                placeholder={formData.type === 'PRODUCTO COMPUESTO' ? "0 (Auto)" : "0.00"}
+                            />
+                        </div>
                         <div>
                             <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Unidad (ml, gr, unid...)</label>
                             <input
@@ -302,43 +316,70 @@ const InventoryView = () => {
                     </div>
 
                     {formData.type === 'PRODUCTO COMPUESTO' && (
-                        <div className="space-y-4 pt-4 border-t border-border-color">
-                            <h4 className="font-header text-accent-color uppercase italic">Receta / Composición</h4>
-                            <div className="flex flex-col md:flex-row gap-2 mb-4">
+                        <div className="space-y-4 pt-4 border-t border-border-color bg-white/5 p-4 rounded-xl">
+                            <h4 className="font-header text-accent-color uppercase italic flex items-center gap-2">
+                                <Plus size={16} /> Composición del Combo
+                            </h4>
+                            <div className="flex flex-col md:flex-row gap-2">
                                 <select
-                                    className="militar-input flex-1"
-                                    onChange={(e) => addIngredientRow(products.find(p => p.id === parseInt(e.target.value)))}
-                                    value=""
+                                    id="ingredient-selector"
+                                    className="militar-input flex-1 text-sm"
+                                    defaultValue=""
                                 >
-                                    <option value="">+ Agregar Ingrediente/Insumo...</option>
-                                    {products.filter(p => p.id !== editingProduct?.id).map(p => (
-                                        <option key={p.id} value={p.id}>{p.name} ({p.unit})</option>
-                                    ))}
+                                    <option value="" disabled>Seleccionar Ingrediente...</option>
+                                    {products
+                                        .filter(p => String(p.id) !== String(editingProduct?.id))
+                                        .map(p => (
+                                            <option key={p.id} value={p.id}>{p.name} ({p.unit})</option>
+                                        ))
+                                    }
                                 </select>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const select = document.getElementById('ingredient-selector');
+                                        const val = select.value;
+                                        if (val) {
+                                            const ing = products.find(p => String(p.id) === String(val));
+                                            addIngredientRow(ing);
+                                            select.value = ""; // Reset
+                                        }
+                                    }}
+                                    className="militar-btn px-4 py-2 flex items-center gap-2 text-xs"
+                                >
+                                    <Plus size={14} /> AGREGAR
+                                </button>
                             </div>
-                            <div className="space-y-2 max-h-40 overflow-auto pr-2">
+
+                            <div className="space-y-2 mt-4 max-h-48 overflow-auto pr-1">
+                                {ingredients.length === 0 && (
+                                    <p className="text-center text-[10px] text-text-secondary py-4 border-2 border-dashed border-white/5 rounded-lg">
+                                        No has agregado ingredientes aún
+                                    </p>
+                                )}
                                 {ingredients.map((ing, idx) => (
-                                    <div key={idx} className="flex items-center gap-2 p-3 bg-white/5 rounded-lg border border-white/5">
+                                    <div key={idx} className="flex items-center gap-2 p-2 bg-card-bg rounded-lg border border-border-color shadow-sm">
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-semibold text-sm truncate">{ing.name}</p>
+                                            <p className="font-semibold text-xs truncate">{ing.name}</p>
                                         </div>
                                         <div className="flex items-center gap-2">
+                                            <span className="text-[10px] text-text-secondary">Cant:</span>
                                             <input
                                                 type="number" step="0.01"
-                                                className="militar-input w-20 py-1.5 text-center text-sm"
+                                                className="militar-input w-20 py-1 text-center text-xs border-accent-color/20"
                                                 value={ing.quantity}
                                                 onChange={e => {
                                                     const newIngs = [...ingredients];
-                                                    newIngs[idx].quantity = parseFloat(e.target.value);
+                                                    newIngs[idx].quantity = parseFloat(e.target.value) || 0;
                                                     setIngredients(newIngs);
                                                 }}
                                             />
                                             <button
                                                 type="button"
                                                 onClick={() => setIngredients(ingredients.filter((_, i) => i !== idx))}
-                                                className="text-danger-color p-2 hover:bg-danger-color/10 rounded-full transition-colors"
+                                                className="text-danger-color p-1.5 hover:bg-danger-color/10 rounded-lg transition-colors"
                                             >
-                                                <Trash2 size={16} />
+                                                <Trash2 size={14} />
                                             </button>
                                         </div>
                                     </div>
@@ -346,7 +387,6 @@ const InventoryView = () => {
                             </div>
                         </div>
                     )}
-
                     <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-border-color">
                         <button type="button" onClick={() => setModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
                         <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Guardar Item</button>
