@@ -106,9 +106,20 @@ textarea {
 }
 
 /* Force dark theme for the options list in browsers that support it */
+/* Force dark theme for the options list */
+select.afterwod-input,
+select {
+  color-scheme: dark;
+}
+
 .afterwod-input option {
-  background-color: #1A1A1A;
-  color: #FFFFFF;
+  background-color: #1A1A1A !important;
+  color: #FFFFFF !important;
+}
+
+/* Webkit specific for some browsers */
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 
 /* Animations */
