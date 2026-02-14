@@ -56,31 +56,7 @@ const Dashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* User Stats Table */}
-                <div className="militar-card overflow-hidden">
-                    <div className="flex items-center gap-2 mb-6 border-b border-border-color pb-4">
-                        <UsersIcon className="text-accent-color" size={20} />
-                        <h3 className="text-lg md:text-xl font-header uppercase">Rendimiento por Cliente</h3>
-                    </div>
-                    <div className="space-y-4">
-                        {userStats.slice(0, 5).map(stat => (
-                            <div key={stat.id} className="flex justify-between items-center p-3 rounded bg-white/5 group hover:bg-white/10 transition-colors">
-                                <span className="font-semibold text-sm md:text-base truncate max-w-[50%]">{stat.name}</span>
-                                <div className="text-right">
-                                    <p className="font-header text-base md:text-lg">${(stat.totalBought || 0).toFixed(2)}</p>
-                                    <p className={`text-[9px] md:text-[10px] font-bold uppercase ${stat.balance > 0 ? 'text-danger-color' : 'text-success-color'}`}>
-                                        {stat.balance > 0 ? `DEUDA: $${(stat.balance || 0).toFixed(2)}` : 'AL DÍA'}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                        {userStats.length === 0 && (
-                            <p className="p-8 text-center text-text-secondary text-sm italic">Sin datos de ventas por cliente aún</p>
-                        )}
-                    </div>
-                </div>
-
-                {/* Debtors Section */}
+                {/* Debtors Section (Moved to Top) */}
                 <div className="lg:col-span-2 militar-card bg-sidebar-color border-accent-color/30">
                     <div className="flex items-center justify-between mb-6">
                         <h3 className="text-xl font-header uppercase flex items-center gap-2">
@@ -134,13 +110,47 @@ const Dashboard = () => {
                     </div>
                 </div>
 
+                {/* User Stats Table */}
+                <div className="militar-card overflow-hidden">
+                    <div className="flex items-center gap-2 mb-6 border-b border-border-color pb-4">
+                        <UsersIcon className="text-accent-color" size={20} />
+                        <h3 className="text-lg md:text-xl font-header uppercase">Rendimiento por Cliente</h3>
+                    </div>
+                    <div className="space-y-4">
+                        {userStats.slice(0, 5).map(stat => (
+                            <div key={stat.id} className="flex justify-between items-center p-3 rounded bg-white/5 group hover:bg-white/10 transition-colors">
+                                <span className="font-semibold text-sm md:text-base truncate max-w-[50%]">{stat.name}</span>
+                                <div className="text-right">
+                                    <p className="font-header text-base md:text-lg">${(stat.totalBought || 0).toFixed(2)}</p>
+                                    <p className={`text-[9px] md:text-[10px] font-bold uppercase ${stat.balance > 0 ? 'text-danger-color' : 'text-success-color'}`}>
+                                        {stat.balance > 0 ? `DEUDA: $${(stat.balance || 0).toFixed(2)}` : 'AL DÍA'}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                        {userStats.length === 0 && (
+                            <p className="p-8 text-center text-text-secondary text-sm italic">Sin datos de ventas por cliente aún</p>
+                        )}
+                    </div>
+                </div>
+
                 {/* Info Card */}
                 <div className="militar-card flex flex-col justify-center items-center text-center p-8 md:p-12 bg-gradient-to-br from-card-bg to-sidebar-color border-white/5">
-                    <img src="/afterwod/logo.png" alt="Logo" className="w-24 md:w-32 opacity-10 mb-6 grayscale" />
+                    <img src="logo.png" alt="Logo" className="w-24 md:w-32 opacity-10 mb-6 grayscale" />
                     <h3 className="text-xl md:text-2xl font-header text-text-secondary opacity-50 uppercase italic tracking-widest">
                         Militar Box v2.0
                     </h3>
-                    <p className="text-text-secondary text-xs md:text-sm mt-4">Edición Web Port · Afterwd</p>
+                    <p className="text-text-secondary text-xs md:text-sm mt-4">Edición Web Port · Afterwod</p>
+
+                    <a
+                        href="https://gualguanosky.github.io/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnn8knt5S7qhMPWxTlErytunaVVPLx5fLbv1_denbm_JoCe_NvUgSkydqVkyI_aem_ORP__D-935BHMxd94tT98w"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-6 flex items-center gap-2 text-xs font-bold text-accent-color hover:text-white transition-colors animate-pulse"
+                    >
+                        <span>Designed by Gualguanosky</span>
+                        <span>❤️</span>
+                    </a>
                 </div>
             </div>
         </div>
