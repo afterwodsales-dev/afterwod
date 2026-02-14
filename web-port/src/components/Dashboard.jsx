@@ -4,7 +4,7 @@ import { useStore } from '../context/StoreContext';
 import LoadingSpinner from './LoadingSpinner';
 
 const Dashboard = () => {
-    const { getFinancialSummary, users, loading } = useStore();
+    const { getFinancialSummary, users, sales, products, loading } = useStore();
     const { totalSales, totalPurchases, userStats } = getFinancialSummary();
 
     const debtors = users.filter(u => (u.balance || 0) > 0).sort((a, b) => b.balance - a.balance);
@@ -87,7 +87,21 @@ const Dashboard = () => {
                                     </div>
                                     <button
                                         onClick={() => {
-                                            const message = `*RECORDATORIO DE PAGO - AFTERWOD* 🪖\n\nHola *${u.name}*, esperamos que estés bien.\n\nTe escribimos para recordarte que tienes un saldo pendiente en nuestra tienda por un valor de:\n\n💰 *Total Deuda: $${u.balance.toFixed(2)}*\n\nPor favor, recuerda pasar a ponerte al día. ¡Gracias por tu apoyo!\n\n_Atentamente: Gestión Afterwod_`;
+                                            // 1. Get recent 'Fiado' items
+                                            const userFiadoSales = sales
+                                                .filter(s => s.userId === u.id && s.method === 'Fiado')
+                                                .sort((a, b) => new Date(b.saleDate) - new Date(a.saleDate))
+                                                .slice(0, 10); // Take last 10 items for context
+
+                                            // 2. Format item list
+                                            const itemsList = userFiadoSales.map(s => {
+                                                const product = products.find(p => p.id === s.productId);
+                                                return product ? `- ${product.name} (x${s.quantity})` : `- Producto x${s.quantity}`;
+                                            }).join('\n');
+
+                                            const itemsSection = itemsList ? `\n*Detalle (Últimos fiados):*\n${itemsList}\n` : '';
+
+                                            const message = `*RECORDATORIO DE PAGO - AFTERWOD* 🪖\n\nHola *${u.name}*, esperamos que estés bien.\n\nTe escribimos para recordarte que tienes un saldo pendiente en nuestra tienda.${itemsSection}\n💰 *Total Deuda: $${u.balance.toFixed(2)}*\n\nPor favor, recuerda pasar a ponerte al día. ¡Gracias por tu apoyo!\n\n_Atentamente: Gestión Afterwod_`;
                                             const encoded = encodeURIComponent(message);
                                             const url = `https://wa.me/${(u.phone || '').replace(/\D/g, '')}?text=${encoded}`;
                                             window.open(url, '_blank');
