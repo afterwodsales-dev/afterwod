@@ -47,4 +47,4 @@ jobs:
           folder: web-port/dist
           branch: gh-pages
           clean: true
-          force: true
+          single-commit: true
