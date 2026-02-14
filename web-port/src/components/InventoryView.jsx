@@ -37,11 +37,11 @@ const InventoryView = () => {
                 unit: product.unit
             });
             // Load recipes for this product
-            const productRecipes = recipes.filter(r => r.productId === product.id);
+            const productRecipes = recipes.filter(r => String(r.productId) === String(product.id));
             setIngredients(productRecipes.map(r => ({
-                ingredientId: r.ingredientId,
-                quantity: r.quantity,
-                name: products.find(p => p.id === r.ingredientId)?.name || '?'
+                ingredientId: String(r.ingredientId),
+                quantity: parseFloat(r.quantity) || 1,
+                name: products.find(p => String(p.id) === String(r.ingredientId))?.name || '?'
             })));
         } else {
             setEditingProduct(null);
@@ -91,7 +91,7 @@ const InventoryView = () => {
 
     const addIngredientRow = (ing) => {
         if (!ing) return;
-        setIngredients([...ingredients, { ingredientId: ing.id, name: ing.name, quantity: 1 }]);
+        setIngredients([...ingredients, { ingredientId: String(ing.id), name: ing.name, quantity: 1 }]);
     };
 
     const filteredProducts = products.filter(p =>
@@ -366,7 +366,7 @@ const InventoryView = () => {
                                             <span className="text-[10px] text-text-secondary">Cant:</span>
                                             <input
                                                 type="number" step="0.01"
-                                                className="militar-input w-20 py-1 text-center text-xs border-accent-color/20"
+                                                className="militar-input w-20 py-1 text-center text-xs border-accent-color font-bold bg-white/10"
                                                 value={ing.quantity}
                                                 onChange={e => {
                                                     const newIngs = [...ingredients];
