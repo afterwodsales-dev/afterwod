@@ -43,9 +43,24 @@ const SalesView = () => {
 
             await Promise.all(promises);
 
+            // Construct WhatsApp message if user has phone
+            if (selectedUser && selectedUser.phone) {
+                const itemsText = cart.map(item => `- ${item.name} x${item.qty}`).join('\n');
+                const statusText = paymentMethod === 'Fiado' ? '*PENDIENTE (FIADO)* 📝' : '*PAGADO (EFECTIVO)* ✅';
+                const message = `*MILITAR BOX* 🪖\n\n¡Hola *${selectedUser.name}*! Gracias por tu compra.\n\n*Detalle:*\n${itemsText}\n\n*Total:* $${cartTotal.toFixed(2)}\n*Estado:* ${statusText}\n\n_Sistema de Gestión Militar Box_`;
+
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${selectedUser.phone.replace(/\D/g, '')}?text=${encodedMessage}`;
+
+                if (window.confirm('Venta registrada con éxito. ¿Deseas enviar el recibo por WhatsApp al cliente?')) {
+                    window.open(whatsappUrl, '_blank');
+                }
+            } else {
+                alert('Venta registrada con éxito');
+            }
+
             setCart([]);
             setSelectedUser(null);
-            alert('Venta registrada con éxito');
             setActiveTab('products');
         } catch (error) {
             console.error(error);
