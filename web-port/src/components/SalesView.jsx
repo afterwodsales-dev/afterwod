@@ -47,7 +47,7 @@ const SalesView = () => {
             if (selectedUser && selectedUser.phone && paymentMethod === 'Efectivo') {
                 const itemsText = cart.map(item => `- ${item.name} x${item.qty}`).join('\n');
                 const statusText = paymentMethod === 'Fiado' ? '*PENDIENTE (FIADO)* 📝' : '*PAGADO (EFECTIVO)* ✅';
-                const message = `*MILITAR BOX* 🪖\n\n¡Hola *${selectedUser.name}*! Gracias por tu compra.\n\n*Detalle:*\n${itemsText}\n\n*Total:* $${cartTotal.toFixed(2)}\n*Estado:* ${statusText}\n\n_Sistema de Gestión Militar Box_`;
+                const message = `*AFTERWOD* 🪖\n\n¡Hola *${selectedUser.name}*! Gracias por tu compra.\n\n*Detalle:*\n${itemsText}\n\n*Total:* $${cartTotal.toFixed(2)}\n*Estado:* ${statusText}\n\n_Sistema de Gestión Afterwod_`;
 
                 const encodedMessage = encodeURIComponent(message);
                 const whatsappUrl = `https://wa.me/${selectedUser.phone.replace(/\D/g, '')}?text=${encodedMessage}`;

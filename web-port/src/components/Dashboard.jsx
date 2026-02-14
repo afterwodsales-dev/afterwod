@@ -17,7 +17,7 @@ const Dashboard = () => {
         <div className="p-4 md:p-6 space-y-6 md:space-y-8 max-w-7xl mx-auto">
             <div className="flex flex-col gap-2">
                 <h2 className="text-3xl md:text-4xl font-header uppercase tracking-tighter">Panel de Control</h2>
-                <p className="text-text-secondary text-sm md:text-base">Resumen consolidado de Militar Box</p>
+                <p className="text-text-secondary text-sm md:text-base">Resumen consolidado de Afterwod</p>
             </div>
 
             {/* Stats Grid */}
@@ -87,7 +87,7 @@ const Dashboard = () => {
                                     </div>
                                     <button
                                         onClick={() => {
-                                            const message = `*RECORDATORIO DE PAGO - MILITAR BOX* 🪖\n\nHola *${u.name}*, esperamos que estés bien.\n\nTe escribimos para recordarte que tienes un saldo pendiente en nuestra tienda por un valor de:\n\n💰 *Total Deuda: $${u.balance.toFixed(2)}*\n\nPor favor, recuerda pasar a ponerte al día. ¡Gracias por tu apoyo!\n\n_Atentamente: Gestión Afterwod Militar Box_`;
+                                            const message = `*RECORDATORIO DE PAGO - AFTERWOD* 🪖\n\nHola *${u.name}*, esperamos que estés bien.\n\nTe escribimos para recordarte que tienes un saldo pendiente en nuestra tienda por un valor de:\n\n💰 *Total Deuda: $${u.balance.toFixed(2)}*\n\nPor favor, recuerda pasar a ponerte al día. ¡Gracias por tu apoyo!\n\n_Atentamente: Gestión Afterwod_`;
                                             const encoded = encodeURIComponent(message);
                                             const url = `https://wa.me/${(u.phone || '').replace(/\D/g, '')}?text=${encoded}`;
                                             window.open(url, '_blank');
@@ -138,7 +138,7 @@ const Dashboard = () => {
                 <div className="militar-card flex flex-col justify-center items-center text-center p-8 md:p-12 bg-gradient-to-br from-card-bg to-sidebar-color border-white/5">
                     <img src="logo.png" alt="Logo" className="w-24 md:w-32 opacity-10 mb-6 grayscale" />
                     <h3 className="text-xl md:text-2xl font-header text-text-secondary opacity-50 uppercase italic tracking-widest">
-                        Militar Box v2.0
+                        Afterwod v2.0
                     </h3>
                     <p className="text-text-secondary text-xs md:text-sm mt-4">Edición Web Port · Afterwod</p>
 

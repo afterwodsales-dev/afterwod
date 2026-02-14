@@ -18,8 +18,8 @@
   --corner-radius: 15px;
   --border-width: 2px;
 
-  --font-header: 'Impact', sans-serif;
-  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-header: 'Quicksand', sans-serif;
+  --font-body: 'Quicksand', sans-serif;
 }
 
 * {

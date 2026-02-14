@@ -48,7 +48,7 @@ export default function Login() {
                 {/* Title */}
                 <div className="text-center mb-8">
                     <h2 className="text-2xl font-black text-white tracking-tight uppercase">
-                        MILITAR <span className="text-[var(--accent-color)]">BOX</span>
+                        AFTERWOD <span className="text-[var(--accent-color)]">APP</span>
                     </h2>
                     <p className="text-[#64748b] text-sm mt-2 font-medium">Panel de Gestión Administrativa</p>
                 </div>
