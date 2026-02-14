@@ -101,6 +101,12 @@ textarea {
   outline: none;
 }
 
+/* Fix for dark dropdowns on Windows/Chrome */
+.militar-input option {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
 /* Animations */
 @keyframes slideUp {
   from {
