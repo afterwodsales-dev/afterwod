@@ -163,15 +163,14 @@ const SalesView = () => {
                             {/* Payment Toggle */}
                             <div className="flex gap-2 p-1 bg-white/5 rounded-lg border border-border-color">
                                 <button
-                                    onClick={() => {
-                                        setPaymentMethod('Efectivo');
-                                        setSelectedUser(null);
-                                    }}
+                                    type="button"
+                                    onClick={() => setPaymentMethod('Efectivo')}
                                     className={`flex-1 py-3 px-2 rounded-md font-header text-xs transition-all flex items-center justify-center gap-2 ${paymentMethod === 'Efectivo' ? 'bg-success-color text-black shadow-lg' : 'text-text-secondary hover:bg-white/5'}`}
                                 >
                                     <Banknote size={16} /> CONTADO
                                 </button>
                                 <button
+                                    type="button"
                                     onClick={() => setPaymentMethod('Fiado')}
                                     className={`flex-1 py-3 px-2 rounded-md font-header text-xs transition-all flex items-center justify-center gap-2 ${paymentMethod === 'Fiado' ? 'bg-accent-color text-black shadow-lg' : 'text-text-secondary hover:bg-white/5'}`}
                                 >
@@ -179,28 +178,29 @@ const SalesView = () => {
                                 </button>
                             </div>
 
-                            {/* User Selector (Only for Fiado) */}
-                            {paymentMethod === 'Fiado' && (
-                                <div className="space-y-2 animate-fade-in">
-                                    <label className="text-[10px] text-accent-color uppercase font-bold ml-1">Seleccionar Cliente</label>
-                                    <select
-                                        className="militar-input text-sm p-3 w-full border-accent-color"
-                                        onChange={(e) => setSelectedUser(users.find(u => String(u.id) === String(e.target.value)))}
-                                        value={selectedUser?.id || ""}
-                                        required
-                                    >
-                                        <option value="">-- Elige un cliente --</option>
-                                        {users.map(u => (
-                                            <option key={u.id} value={u.id}>🪖 {u.name} (Debe: ${(u.balance || 0).toFixed(2)})</option>
-                                        ))}
-                                    </select>
-                                    {selectedUser && (
-                                        <div className="bg-accent-color/10 p-2 rounded text-[11px] text-center border border-accent-color/20">
-                                            Venta cargada a la cuenta de <span className="font-bold text-white uppercase">{selectedUser.name}</span>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
+                            {/* User Selector (Available for both, required for Fiado) */}
+                            <div className="space-y-2 animate-fade-in">
+                                <label className="text-[10px] text-accent-color uppercase font-bold ml-1">
+                                    {paymentMethod === 'Fiado' ? 'Cliente Obligatorio' : 'Cliente Opcional (Para WhatsApp)'}
+                                </label>
+                                <select
+                                    className={`militar-input text-sm p-3 w-full ${paymentMethod === 'Fiado' ? 'border-accent-color' : 'border-border-color'}`}
+                                    onChange={(e) => setSelectedUser(users.find(u => String(u.id) === String(e.target.value)) || null)}
+                                    value={selectedUser?.id || ""}
+                                >
+                                    <option value="">{paymentMethod === 'Fiado' ? '-- Selecciona un Deudor --' : '-- Sin Cliente (Venta Anónima) --'}</option>
+                                    {users.map(u => (
+                                        <option key={u.id} value={u.id}>🪖 {u.name} {u.phone ? '📞' : ''}</option>
+                                    ))}
+                                </select>
+                                {selectedUser && (
+                                    <div className={`p-2 rounded text-[11px] text-center border ${paymentMethod === 'Fiado' ? 'bg-accent-color/10 border-accent-color/20' : 'bg-success-color/10 border-success-color/20'}`}>
+                                        {paymentMethod === 'Fiado' ?
+                                            `Venta cargada a la cuenta de ${selectedUser.name}` :
+                                            `Se enviará recibo a ${selectedUser.name}`}
+                                    </div>
+                                )}
+                            </div>
 
                             <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg">
                                 <span className="text-text-secondary font-bold uppercase text-[10px]">Total a Cobrar</span>

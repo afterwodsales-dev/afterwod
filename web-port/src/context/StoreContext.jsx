@@ -199,28 +199,30 @@ export const StoreProvider = ({ children }) => {
     const deductions = new Map();
 
     const traverse = (pid, q) => {
-      const pidStr = String(pid);
-      // Find recipes for this specific product ID
-      const productRecipes = recipes.filter(r => String(r.productId) === pidStr);
+      const pidStr = String(pid).trim();
+      // Find recipes for this specific product ID (using strict string comparison)
+      const productRecipes = recipes.filter(r => String(r.productId).trim() === pidStr);
 
-      console.log(`[Traverse] PID: ${pidStr} | Qty: ${q} | Recipes found: ${productRecipes.length}`);
+      console.log(`[DEDUCTION ENGINE] Checking Product: ${pidStr} | Quantity: ${q} | Recipes found: ${productRecipes.length}`);
 
       if (productRecipes.length > 0) {
         productRecipes.forEach(item => {
-          const itemMultiplier = parseFloat(item.quantity) || 1;
-          console.log(` -> Sub-item: ${item.ingredientId} | Multiplier: ${itemMultiplier} | Final Qty: ${itemMultiplier * q}`);
-          traverse(String(item.ingredientId), itemMultiplier * q);
+          const itemMultiplier = parseFloat(item.quantity) || 0;
+          const ingredientId = String(item.ingredientId).trim();
+          console.log(`  -> RECIPE ITEM: Ingredient ${ingredientId} | Multiplier: ${itemMultiplier} | Result: ${itemMultiplier * q}`);
+          traverse(ingredientId, itemMultiplier * q);
         });
       } else {
         const current = deductions.get(pidStr) || 0;
         deductions.set(pidStr, current + q);
-        console.log(` -> LEAF: Adding ${q} to deductions for ${pidStr}. Total now: ${current + q}`);
+        console.log(`  -> LEAF REACHED: Staging deduction of ${q} for ${pidStr}`);
       }
     };
 
-    console.group(`Sale Recording: Product ${productId} x ${qty}`);
+    console.group(`💎 Record Sale Diagnostic: PID ${productId}`);
+    console.log("Recipes state current length:", recipes.length);
     traverse(productId, qty);
-    console.log("Final Deductions Map:", Object.fromEntries(deductions));
+    console.log("Final Deduction Plan:", Object.fromEntries(deductions));
     console.groupEnd();
 
     deductions.forEach((dQty, pid) => {
