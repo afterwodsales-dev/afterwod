@@ -15,26 +15,14 @@ export default function Login() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        // Auto-append domain if simple username is provided
-        let authEmail = email;
-        if (!email.includes('@')) {
-            authEmail = `${email}@militarbox.com`;
-        }
-
         try {
             setError('');
             setLoading(true);
-            await login(authEmail, password);
+            await login(email, password); // 'email' state actually holds the username now
             navigate('/');
         } catch (err) {
             console.error(err);
-            if (err.code === 'auth/configuration-not-found') {
-                setError('Configuración pendiente en Firebase.');
-            } else if (err.code === 'auth/invalid-credential') {
-                setError('Credenciales incorrectas.');
-            } else {
-                setError('Error de acceso. Verifique sus datos.');
-            }
+            setError('Credenciales incorrectas. Verifique usuario y contraseña.');
         }
         setLoading(false);
     }
