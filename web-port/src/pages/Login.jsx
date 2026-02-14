@@ -15,10 +15,16 @@ export default function Login() {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        // Auto-append domain if simple username is provided
+        let authEmail = email;
+        if (!email.includes('@')) {
+            authEmail = `${email}@militarbox.com`;
+        }
+
         try {
             setError('');
             setLoading(true);
-            await login(email, password);
+            await login(authEmail, password);
             navigate('/');
         } catch (err) {
             console.error(err);
@@ -71,12 +77,12 @@ export default function Login() {
                     <div className="space-y-2">
                         <label className="text-[#94a3b8] text-xs font-bold uppercase tracking-wide ml-1">Usuario</label>
                         <input
-                            type="email"
+                            type="text"
                             className="w-full bg-[#0d1117] border border-[#1e293b] text-white rounded-lg px-4 py-3 placeholder:text-[#334155] focus:outline-none focus:border-[var(--accent-color)] focus:ring-1 focus:ring-[var(--accent-color)] transition-all"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            placeholder="Ingrese su usuario o correo"
+                            placeholder="Usuario (ej: admin)"
                         />
                     </div>
 
