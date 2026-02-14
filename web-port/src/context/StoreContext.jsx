@@ -10,7 +10,8 @@ import {
   orderBy,
   where,
   getDocs,
-  writeBatch
+  writeBatch,
+  increment
 } from 'firebase/firestore';
 import { db } from '../services/firebase';
 
@@ -214,8 +215,7 @@ export const StoreProvider = ({ children }) => {
 
     deductions.forEach((dQty, pid) => {
       const pRef = doc(db, 'products', pid);
-      const currentStock = products.find(p => String(p.id) === String(pid))?.stock || 0;
-      batch.update(pRef, { stock: currentStock - dQty });
+      batch.update(pRef, { stock: increment(-dQty) });
     });
 
     const saleRef = doc(collection(db, 'sales'));
@@ -254,8 +254,7 @@ export const StoreProvider = ({ children }) => {
         });
       } else {
         const pRef = doc(db, 'products', String(pid));
-        const currentStock = products.find(p => String(p.id) === String(pid))?.stock || 0;
-        batch.update(pRef, { stock: currentStock + q });
+        batch.update(pRef, { stock: increment(q) });
       }
     };
     traverseRevert(sale.productId, sale.quantity);

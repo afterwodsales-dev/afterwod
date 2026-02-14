@@ -80,7 +80,7 @@ const Dashboard = () => {
 
                 {/* Info Card */}
                 <div className="militar-card flex flex-col justify-center items-center text-center p-8 md:p-12 bg-gradient-to-br from-card-bg to-sidebar-color">
-                    <img src="logo.png" alt="Logo" className="w-24 md:w-32 opacity-10 mb-6 grayscale" />
+                    <img src="/afterwod/logo.png" alt="Logo" className="w-24 md:w-32 opacity-10 mb-6 grayscale" />
                     <h3 className="text-xl md:text-2xl font-header text-text-secondary opacity-50 uppercase italic tracking-widest">
                         Militar Box v2.0
                     </h3>
