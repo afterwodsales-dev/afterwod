@@ -5,9 +5,10 @@ import Modal from './Modal';
 import LoadingSpinner from './LoadingSpinner';
 
 const InventoryView = () => {
-    const { products, addProduct, updateProduct, deleteProduct, recipes, addRecipeItem, deleteRecipe, loading } = useStore();
+    const { products, addProduct, updateProduct, deleteProduct, recipes, addRecipeItem, deleteRecipe, recordPurchase, loading } = useStore();
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setModalOpen] = useState(false);
+    const [isPurchaseModalOpen, setPurchaseModalOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
 
     // Form State
@@ -16,6 +17,13 @@ const InventoryView = () => {
         type: 'PRODUCTO SIMPLE', unit: 'unid'
     });
     const [ingredients, setIngredients] = useState([]);
+
+    // Purchase Form State
+    const [purchaseData, setPurchaseData] = useState({
+        productId: '',
+        quantity: '',
+        totalCost: ''
+    });
 
     const openModal = (product = null) => {
         if (product) {
@@ -41,6 +49,21 @@ const InventoryView = () => {
             setIngredients([]);
         }
         setModalOpen(true);
+    };
+
+    const handlePurchase = async (e) => {
+        e.preventDefault();
+        const { productId, quantity, totalCost } = purchaseData;
+        if (!productId) return;
+
+        try {
+            await recordPurchase(productId, quantity, totalCost);
+            setPurchaseModalOpen(false);
+            setPurchaseData({ productId: '', quantity: '', totalCost: '' });
+            alert('Compra registrada y stock actualizado');
+        } catch (error) {
+            alert('Error al registrar compra');
+        }
     };
 
     const handleSave = async (e) => {
@@ -82,12 +105,20 @@ const InventoryView = () => {
         <div className="p-4 md:p-6 h-[calc(100vh-4rem)] flex flex-col">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 md:mb-8">
                 <h2 className="text-2xl md:text-3xl font-header uppercase">Inventario</h2>
-                <button
-                    onClick={() => openModal()}
-                    className="militar-btn flex items-center justify-center gap-2 w-full md:w-auto"
-                >
-                    <Plus size={20} /> NUEVO ITEM
-                </button>
+                <div className="flex gap-2 w-full md:w-auto">
+                    <button
+                        onClick={() => setPurchaseModalOpen(true)}
+                        className="militar-btn-secondary flex items-center justify-center gap-2 flex-1 md:flex-none"
+                    >
+                        <Package size={20} /> REABASTECER
+                    </button>
+                    <button
+                        onClick={() => openModal()}
+                        className="militar-btn flex items-center justify-center gap-2 flex-1 md:flex-none"
+                    >
+                        <Plus size={20} /> NUEVO ITEM
+                    </button>
+                </div>
             </div>
 
             <div className="militar-card flex-1 flex flex-col overflow-hidden">
@@ -314,6 +345,65 @@ const InventoryView = () => {
                     <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-border-color">
                         <button type="button" onClick={() => setModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
                         <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Guardar Item</button>
+                    </div>
+                </form>
+            </Modal>
+
+            {/* Purchase Modal */}
+            <Modal
+                isOpen={isPurchaseModalOpen}
+                onClose={() => setPurchaseModalOpen(false)}
+                title="Registrar Compra / Stock"
+            >
+                <form onSubmit={handlePurchase} className="space-y-6">
+                    <div>
+                        <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Seleccionar Producto / Insumo</label>
+                        <select
+                            required
+                            className="militar-input"
+                            value={purchaseData.productId}
+                            onChange={e => setPurchaseData({ ...purchaseData, productId: e.target.value })}
+                        >
+                            <option value="">Elegir de la lista...</option>
+                            {products.filter(p => p.type !== 'PRODUCTO COMPUESTO').map(p => (
+                                <option key={p.id} value={p.id}>{p.name} ({p.unit})</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Cantidad Adquirida</label>
+                            <input
+                                type="number" step="0.01" required
+                                className="militar-input text-xl text-center font-header"
+                                placeholder="0.00"
+                                value={purchaseData.quantity}
+                                onChange={e => setPurchaseData({ ...purchaseData, quantity: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Costo Total ($)</label>
+                            <input
+                                type="number" step="0.01" required
+                                className="militar-input text-xl text-center font-header text-accent-color"
+                                placeholder="0.00"
+                                value={purchaseData.totalCost}
+                                onChange={e => setPurchaseData({ ...purchaseData, totalCost: e.target.value })}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/5 p-4 rounded-lg border border-white/5 text-center">
+                        <p className="text-[10px] text-text-secondary uppercase mb-1">Costo Unitario Calculado</p>
+                        <p className="text-2xl font-header text-success-color">
+                            ${((parseFloat(purchaseData.totalCost) || 0) / (parseFloat(purchaseData.quantity) || 1)).toFixed(2)}
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-border-color">
+                        <button type="button" onClick={() => setPurchaseModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
+                        <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Confirmar Compra</button>
                     </div>
                 </form>
             </Modal>
