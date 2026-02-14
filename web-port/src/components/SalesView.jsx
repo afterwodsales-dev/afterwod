@@ -145,52 +145,59 @@ const SalesView = () => {
                         </div>
 
                         <div className="mt-auto space-y-4 pt-4 border-t border-border-color">
-                            {/* User selector */}
-                            <div>
-                                <label className="text-xs text-text-secondary uppercase mb-2 block font-bold">Tipo de Cobro / Cliente</label>
-                                <div className="space-y-3">
-                                    <div className="flex items-center gap-2">
-                                        <select
-                                            className={`militar-input text-sm p-3 w-full border-2 ${selectedUser ? 'border-accent-color' : 'border-success-color'}`}
-                                            onChange={(e) => {
-                                                const val = e.target.value;
-                                                if (val === "") {
-                                                    setSelectedUser(null);
-                                                } else {
-                                                    setSelectedUser(users.find(u => String(u.id) === String(val)));
-                                                }
-                                            }}
-                                            value={selectedUser?.id || ""}
-                                        >
-                                            <option value="">🛒 VENTA AL CONTADO (Efectivo)</option>
-                                            <optgroup label="CRÉDITO A CLIENTE (FIADO)">
-                                                {users.map(u => (
-                                                    <option key={u.id} value={u.id}>🪖 {u.name} (Debe: ${(u.balance || 0).toFixed(2)})</option>
-                                                ))}
-                                            </optgroup>
-                                        </select>
-                                    </div>
+                            {/* Payment Toggle */}
+                            <div className="flex gap-2 p-1 bg-white/5 rounded-lg border border-border-color">
+                                <button
+                                    onClick={() => {
+                                        setPaymentMethod('Efectivo');
+                                        setSelectedUser(null);
+                                    }}
+                                    className={`flex-1 py-3 px-2 rounded-md font-header text-xs transition-all flex items-center justify-center gap-2 ${paymentMethod === 'Efectivo' ? 'bg-success-color text-black shadow-lg' : 'text-text-secondary hover:bg-white/5'}`}
+                                >
+                                    <Banknote size={16} /> CONTADO
+                                </button>
+                                <button
+                                    onClick={() => setPaymentMethod('Fiado')}
+                                    className={`flex-1 py-3 px-2 rounded-md font-header text-xs transition-all flex items-center justify-center gap-2 ${paymentMethod === 'Fiado' ? 'bg-accent-color text-black shadow-lg' : 'text-text-secondary hover:bg-white/5'}`}
+                                >
+                                    <CreditCard size={16} /> FIADO
+                                </button>
+                            </div>
 
+                            {/* User Selector (Only for Fiado) */}
+                            {paymentMethod === 'Fiado' && (
+                                <div className="space-y-2 animate-fade-in">
+                                    <label className="text-[10px] text-accent-color uppercase font-bold ml-1">Seleccionar Cliente</label>
+                                    <select
+                                        className="militar-input text-sm p-3 w-full border-accent-color"
+                                        onChange={(e) => setSelectedUser(users.find(u => String(u.id) === String(e.target.value)))}
+                                        value={selectedUser?.id || ""}
+                                        required
+                                    >
+                                        <option value="">-- Elige un cliente --</option>
+                                        {users.map(u => (
+                                            <option key={u.id} value={u.id}>🪖 {u.name} (Debe: ${(u.balance || 0).toFixed(2)})</option>
+                                        ))}
+                                    </select>
                                     {selectedUser && (
-                                        <div className="bg-accent-color/10 p-3 rounded-lg border border-accent-color/30 animate-fade-in">
-                                            <p className="text-[10px] text-accent-color uppercase font-bold mb-1">Registro de Deuda</p>
-                                            <p className="text-xs text-text-secondary">Esta venta se sumará a la cuenta de <span className="text-white font-bold">{selectedUser.name}</span>.</p>
+                                        <div className="bg-accent-color/10 p-2 rounded text-[11px] text-center border border-accent-color/20">
+                                            Venta cargada a la cuenta de <span className="font-bold text-white uppercase">{selectedUser.name}</span>
                                         </div>
                                     )}
                                 </div>
-                            </div>
+                            )}
 
-                            <div className="flex justify-between items-center">
-                                <span className="text-text-secondary font-bold uppercase text-xs">Total</span>
+                            <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg">
+                                <span className="text-text-secondary font-bold uppercase text-[10px]">Total a Cobrar</span>
                                 <span className="text-3xl font-header text-accent-color">${(cartTotal || 0).toFixed(2)}</span>
                             </div>
 
                             <button
                                 onClick={handleFinishSale}
-                                className="militar-btn w-full py-4 text-lg font-header flex items-center justify-center gap-2"
+                                className={`militar-btn w-full py-4 text-lg font-header flex items-center justify-center gap-2 ${paymentMethod === 'Fiado' && !selectedUser ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
                             >
-                                {selectedUser ? <CreditCard size={20} /> : <Banknote size={20} />}
-                                FINALIZAR {selectedUser ? 'FIADO' : 'COBRO'}
+                                {paymentMethod === 'Fiado' ? <CreditCard size={20} /> : <Banknote size={20} />}
+                                {paymentMethod === 'Fiado' ? 'CARGAR A CUENTA' : 'COBRAR EN EFECTIVO'}
                             </button>
                         </div>
                     </div>

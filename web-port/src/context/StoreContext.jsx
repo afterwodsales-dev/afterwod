@@ -199,23 +199,29 @@ export const StoreProvider = ({ children }) => {
     const deductions = new Map();
 
     const traverse = (pid, q) => {
-      // Find recipes for this specific product ID (ensuring both are cast to String)
-      const productRecipes = recipes.filter(r => String(r.productId) === String(pid));
+      const pidStr = String(pid);
+      // Find recipes for this specific product ID
+      const productRecipes = recipes.filter(r => String(r.productId) === pidStr);
+
+      console.log(`[Traverse] PID: ${pidStr} | Qty: ${q} | Recipes found: ${productRecipes.length}`);
 
       if (productRecipes.length > 0) {
-        // It's a compound product: traverse children
         productRecipes.forEach(item => {
-          const itemMultiplier = Number(item.quantity) || 1;
+          const itemMultiplier = parseFloat(item.quantity) || 1;
+          console.log(` -> Sub-item: ${item.ingredientId} | Multiplier: ${itemMultiplier} | Final Qty: ${itemMultiplier * q}`);
           traverse(String(item.ingredientId), itemMultiplier * q);
         });
       } else {
-        // Base case: it's a leaf/simple product, record the final deduction
-        const current = deductions.get(String(pid)) || 0;
-        deductions.set(String(pid), current + q);
+        const current = deductions.get(pidStr) || 0;
+        deductions.set(pidStr, current + q);
+        console.log(` -> LEAF: Adding ${q} to deductions for ${pidStr}. Total now: ${current + q}`);
       }
     };
 
+    console.group(`Sale Recording: Product ${productId} x ${qty}`);
     traverse(productId, qty);
+    console.log("Final Deductions Map:", Object.fromEntries(deductions));
+    console.groupEnd();
 
     deductions.forEach((dQty, pid) => {
       const pRef = doc(db, 'products', pid);
