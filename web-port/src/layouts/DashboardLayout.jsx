@@ -47,7 +47,7 @@ export default function DashboardLayout() {
             {/* Mobile Header */}
             <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[var(--sidebar-color)] border-b border-[var(--border-color)] z-40 flex items-center px-4 justify-between">
                 <div className="flex items-center gap-3">
-                    <img src="/logo.png" alt="Militar Box" className="h-8" />
+                    <img src="logo.png" alt="Militar Box" className="h-8" />
                     <span className="font-[var(--font-header)] text-lg text-[var(--accent-color)]">MILITAR BOX</span>
                 </div>
                 <button
@@ -77,7 +77,7 @@ export default function DashboardLayout() {
             >
                 <div className="p-4 border-b border-[var(--border-color)] flex items-center justify-between h-16 shrink-0">
                     <div className="flex items-center gap-3">
-                        <img src="/logo.png" alt="Militar Box" className={`h-10 transition-all ${isSidebarOpen ? 'w-10' : 'w-8 ml-[-4px]'}`} />
+                        <img src="logo.png" alt="Militar Box" className={`h-10 transition-all ${isSidebarOpen ? 'w-10' : 'w-8 ml-[-4px]'}`} />
                         {isSidebarOpen && <span className="font-[var(--font-header)] text-xl text-[var(--accent-color)] truncate animate-fade-in">MILITAR BOX</span>}
                     </div>
 

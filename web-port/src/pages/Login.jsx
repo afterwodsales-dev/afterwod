@@ -40,7 +40,7 @@ export default function Login() {
                     <div className="relative bg-[#0d4f9e00] p-4 rounded-2xl">
                         {/* Using the Logo or a Shield as requested by style, adapted to brand */}
                         <div className="w-20 h-20 bg-gradient-to-b from-[#1c2333] to-[#0d1117] rounded-xl flex items-center justify-center border border-[#2d3545] shadow-inner overflow-hidden">
-                            <img src="/logo.png" alt="Logo" className="w-14 h-14 object-contain" />
+                            <img src="logo.png" alt="Logo" className="w-14 h-14 object-contain" />
                         </div>
                     </div>
                 </div>

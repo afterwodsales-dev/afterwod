@@ -200,7 +200,10 @@ export const StoreProvider = ({ children }) => {
     const traverse = (pid, q) => {
       const productRecipes = recipes.filter(r => String(r.productId) === String(pid));
       if (productRecipes.length > 0) {
-        productRecipes.forEach(item => traverse(item.ingredientId, item.quantity * q));
+        productRecipes.forEach(item => {
+          const multiplier = Number(item.quantity) || 1;
+          traverse(item.ingredientId, multiplier * q);
+        });
       } else {
         const current = deductions.get(String(pid)) || 0;
         deductions.set(String(pid), current + q);
@@ -245,7 +248,10 @@ export const StoreProvider = ({ children }) => {
     const traverseRevert = (pid, q) => {
       const productRecipes = recipes.filter(r => String(r.productId) === String(pid));
       if (productRecipes.length > 0) {
-        productRecipes.forEach(item => traverseRevert(item.ingredientId, item.quantity * q));
+        productRecipes.forEach(item => {
+          const multiplier = Number(item.quantity) || 1;
+          traverseRevert(item.ingredientId, multiplier * q);
+        });
       } else {
         const pRef = doc(db, 'products', String(pid));
         const currentStock = products.find(p => String(p.id) === String(pid))?.stock || 0;
