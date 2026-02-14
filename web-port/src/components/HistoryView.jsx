@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Search, History as HistoryIcon, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import LoadingSpinner from './LoadingSpinner';
 
 const HistoryView = () => {
-    const { getCombinedHistory } = useStore();
+    const { getCombinedHistory, loading } = useStore();
     const [searchTerm, setSearchTerm] = useState('');
 
     const history = getCombinedHistory();
@@ -11,6 +12,8 @@ const HistoryView = () => {
         h.detail.toLowerCase().includes(searchTerm.toLowerCase()) ||
         h.type.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (loading) return <LoadingSpinner message="Cargando historial..." />;
 
     return (
         <div className="p-6">
