@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { UserPlus, Search, Trash2, Wallet, ExternalLink, Phone } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import Modal from './Modal';
+import LoadingSpinner from './LoadingSpinner';
 
 const UsersView = () => {
-    const { users, addUser, deleteUser, recordPayment } = useStore();
+    const { users, addUser, deleteUser, recordPayment, loading } = useStore();
     const [searchTerm, setSearchTerm] = useState('');
     const [isUserModalOpen, setUserModalOpen] = useState(false);
     const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
@@ -42,6 +43,8 @@ const UsersView = () => {
         u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         u.phone?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (loading) return <LoadingSpinner message="Cargando usuarios..." />;
 
     return (
         <div className="p-6">

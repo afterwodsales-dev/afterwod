@@ -1,12 +1,15 @@
 import React from 'react';
 import { TrendingUp, TrendingDown, Activity, Users as UsersIcon } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import LoadingSpinner from './LoadingSpinner';
 
 const Dashboard = () => {
-    const { getFinancialSummary } = useStore();
+    const { getFinancialSummary, loading } = useStore();
     const { totalSales, totalPurchases, userStats } = getFinancialSummary();
 
     const profit = totalSales - totalPurchases;
+
+    if (loading) return <LoadingSpinner message="Cargando panel de control..." />;
 
     return (
         <div className="p-6 space-y-8 max-w-7xl mx-auto">

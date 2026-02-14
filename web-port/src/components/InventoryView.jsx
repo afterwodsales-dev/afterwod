@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Plus, Search, Edit2, Trash2, Package } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import Modal from './Modal';
+import LoadingSpinner from './LoadingSpinner';
 
 const InventoryView = () => {
-    const { products, addProduct, updateProduct, deleteProduct, recipes, addRecipeItem, deleteRecipe } = useStore();
+    const { products, addProduct, updateProduct, deleteProduct, recipes, addRecipeItem, deleteRecipe, loading } = useStore();
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setModalOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
@@ -74,6 +75,8 @@ const InventoryView = () => {
         p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         p.category?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (loading) return <LoadingSpinner message="Cargando inventario..." />;
 
     return (
         <div className="p-6">

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { ShoppingCart, User, CreditCard, Banknote, Trash2, Search } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import LoadingSpinner from './LoadingSpinner';
 
 const SalesView = () => {
-    const { products, users, recordSale } = useStore();
+    const { products, users, recordSale, loading } = useStore();
     const [searchTerm, setSearchTerm] = useState('');
     const [cart, setCart] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -29,6 +30,8 @@ const SalesView = () => {
     };
 
     const cartTotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+    if (loading) return <LoadingSpinner message="Cargando productos..." />;
 
     const handleFinishSale = async () => {
         if (cart.length === 0) return;
