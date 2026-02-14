@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: dark;
   --bg-color: #0D0D0D;
   --card-bg: #1A1A1A;
   --sidebar-color: #121212;
@@ -88,12 +89,15 @@ textarea {
 }
 
 .militar-input {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #1A1A1A;
+  /* Solid background for selects */
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 0.75rem;
   width: 100%;
   color: #fff;
+  appearance: auto;
+  /* Ensure arrow is visible on selects */
 }
 
 .militar-input:focus {
@@ -101,10 +105,10 @@ textarea {
   outline: none;
 }
 
-/* Fix for dark dropdowns on Windows/Chrome */
+/* Force dark theme for the options list in browsers that support it */
 .militar-input option {
-  background-color: var(--card-bg);
-  color: var(--text-color);
+  background-color: #1A1A1A;
+  color: #FFFFFF;
 }
 
 /* Animations */
