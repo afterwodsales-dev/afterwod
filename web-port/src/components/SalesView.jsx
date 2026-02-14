@@ -94,7 +94,7 @@ const SalesView = () => {
                 <div className="absolute inset-0 p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Product Selection */}
                     <div className={`lg:col-span-2 flex flex-col gap-6 overflow-hidden h-full ${activeTab !== 'products' ? 'hidden lg:flex' : 'flex'}`}>
-                        <div className="militar-card flex-1 flex flex-col overflow-hidden">
+                        <div className="afterwod-card flex-1 flex flex-col overflow-hidden">
                             <div className="flex justify-between items-center mb-4 md:mb-6">
                                 <h3 className="text-lg md:text-xl font-header uppercase">Productos / Combos</h3>
                                 <div className="relative w-40 md:w-64">

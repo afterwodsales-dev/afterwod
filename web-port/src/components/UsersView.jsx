@@ -52,7 +52,7 @@ const UsersView = () => {
                 <h2 className="text-2xl md:text-3xl font-header uppercase">Usuarios y Cartera</h2>
                 <button
                     onClick={() => setUserModalOpen(true)}
-                    className="militar-btn flex items-center justify-center gap-2 w-full md:w-auto"
+                    className="afterwod-btn flex items-center justify-center gap-2 w-full md:w-auto"
                 >
                     <UserPlus size={20} /> NUEVO CLIENTE
                 </button>

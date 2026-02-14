@@ -22,7 +22,7 @@ const Dashboard = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                <div className="militar-card flex items-center justify-between group hover:border-success-color transition-colors p-4 md:p-6">
+                <div className="afterwod-card flex items-center justify-between group hover:border-success-color transition-colors p-4 md:p-6">
                     <div className="min-w-0">
                         <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Ingresos Hoy</p>
                         <p className="text-2xl md:text-4xl font-header text-success-color truncate">${(totalSales || 0).toFixed(2)}</p>

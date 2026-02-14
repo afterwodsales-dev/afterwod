@@ -108,7 +108,7 @@ const InventoryView = () => {
                 <div className="flex gap-2 w-full md:w-auto">
                     <button
                         onClick={() => setPurchaseModalOpen(true)}
-                        className="militar-btn-secondary flex items-center justify-center gap-2 flex-1 md:flex-none"
+                        className="afterwod-btn-secondary flex items-center justify-center gap-2 flex-1 md:flex-none"
                     >
                         <Package size={20} /> REABASTECER
                     </button>

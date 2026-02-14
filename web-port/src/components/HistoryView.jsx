@@ -35,7 +35,7 @@ const HistoryView = () => {
                 <h2 className="text-2xl md:text-3xl font-header uppercase">Historial de Movimientos</h2>
             </div>
 
-            <div className="militar-card flex-1 flex flex-col overflow-hidden">
+            <div className="afterwod-card flex-1 flex flex-col overflow-hidden">
                 {/* Search */}
                 <div className="relative mb-4 md:mb-6">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />

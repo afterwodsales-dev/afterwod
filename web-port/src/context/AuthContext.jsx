@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
             }
 
             // 2. Recover Session from LocalStorage (Simple Persistence)
-            const storedUser = localStorage.getItem('militar_user');
+            const storedUser = localStorage.getItem('afterwod_user');
             if (storedUser) {
                 setCurrentUser(JSON.parse(storedUser));
             }

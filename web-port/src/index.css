@@ -59,14 +59,14 @@ textarea {
   color: inherit;
 }
 
-.militar-card {
+.afterwod-card {
   background-color: var(--card-bg);
   border: var(--border-width) solid var(--border-color);
   border-radius: var(--corner-radius);
   padding: 1.5rem;
 }
 
-.militar-btn {
+.afterwod-btn {
   background-color: var(--accent-color);
   color: #000;
   border: none;
@@ -76,11 +76,11 @@ textarea {
   transition: background-color 0.2s;
 }
 
-.militar-btn:hover {
+.afterwod-btn:hover {
   background-color: var(--accent-hover);
 }
 
-.militar-btn-secondary {
+.afterwod-btn-secondary {
   background-color: transparent;
   color: var(--text-color);
   border: 1px solid var(--border-color);
@@ -88,7 +88,7 @@ textarea {
   padding: 0.75rem 1.5rem;
 }
 
-.militar-input {
+.afterwod-input {
   background-color: #1A1A1A;
   /* Solid background for selects */
   border: 1px solid var(--border-color);
@@ -100,13 +100,13 @@ textarea {
   /* Ensure arrow is visible on selects */
 }
 
-.militar-input:focus {
+.afterwod-input:focus {
   border-color: var(--accent-color);
   outline: none;
 }
 
 /* Force dark theme for the options list in browsers that support it */
-.militar-input option {
+.afterwod-input option {
   background-color: #1A1A1A;
   color: #FFFFFF;
 }
