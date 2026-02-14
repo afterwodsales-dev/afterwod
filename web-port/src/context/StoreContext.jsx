@@ -238,13 +238,13 @@ export const StoreProvider = ({ children }) => {
 
     // We need a slight modification to the helper to separate "traversal" from "deduction decision"
     const traverse = (pid, q) => {
-      const productRecipes = recipes.filter(r => r.productId === pid);
+      const productRecipes = recipes.filter(r => String(r.productId) === String(pid));
       if (productRecipes.length > 0) {
         productRecipes.forEach(item => traverse(item.ingredientId, item.quantity * q));
       } else {
         // Leaf node
-        const current = deductions.get(pid) || 0;
-        deductions.set(pid, current + q);
+        const current = deductions.get(String(pid)) || 0;
+        deductions.set(String(pid), current + q);
       }
     }
 
@@ -253,7 +253,7 @@ export const StoreProvider = ({ children }) => {
     // Apply deductions to Batch
     deductions.forEach((dQty, pid) => {
       const pRef = doc(db, 'products', pid);
-      const currentStock = products.find(p => p.id === pid)?.stock || 0;
+      const currentStock = products.find(p => String(p.id) === String(pid))?.stock || 0;
       batch.update(pRef, { stock: currentStock - dQty });
     });
 
