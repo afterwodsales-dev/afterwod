@@ -49,7 +49,7 @@ const InventoryView = () => {
         if (editingProduct) {
             await updateProduct(editingProduct.id, formData.name, formData.price, formData.stock, formData.category, formData.type, formData.unit);
             pid = editingProduct.id;
-            // For simplicity in this migration, we delete and recreate recipes. 
+            // For simplicity in this migration, we delete and recreate recipes.
             // Ideally we should diff them, but this mimics the Python logic.
             await deleteRecipe(pid);
         } else {
@@ -79,34 +79,34 @@ const InventoryView = () => {
     if (loading) return <LoadingSpinner message="Cargando inventario..." />;
 
     return (
-        <div className="p-6">
-            <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-header uppercase">Inventario</h2>
+        <div className="p-4 md:p-6 h-[calc(100vh-4rem)] flex flex-col">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl font-header uppercase">Inventario</h2>
                 <button
                     onClick={() => openModal()}
-                    className="militar-btn flex items-center gap-2"
+                    className="militar-btn flex items-center justify-center gap-2 w-full md:w-auto"
                 >
                     <Plus size={20} /> NUEVO ITEM
                 </button>
             </div>
 
-            <div className="militar-card h-[70vh] flex flex-col">
+            <div className="militar-card flex-1 flex flex-col overflow-hidden">
                 {/* Search */}
-                <div className="relative mb-6">
+                <div className="relative mb-4 md:mb-6">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />
                     <input
                         type="text"
                         placeholder="Buscar por nombre o categoría..."
-                        className="militar-input pl-10"
+                        className="militar-input pl-10 w-full"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
 
-                {/* Table */}
-                <div className="flex-1 overflow-auto">
+                {/* Desktop Table */}
+                <div className="hidden md:block flex-1 overflow-auto">
                     <table className="w-full text-left border-collapse">
-                        <thead className="sticky top-0 bg-card-bg border-b border-border-color">
+                        <thead className="sticky top-0 bg-card-bg border-b border-border-color z-10">
                             <tr>
                                 <th className="p-4 text-text-secondary font-semibold uppercase text-xs">ID</th>
                                 <th className="p-4 text-text-secondary font-semibold uppercase text-xs">Nombre</th>
@@ -157,6 +157,50 @@ const InventoryView = () => {
                         </tbody>
                     </table>
                 </div>
+
+                {/* Mobile Card List */}
+                <div className="md:hidden flex-1 overflow-auto space-y-3 pb-20">
+                    {filteredProducts.map(p => (
+                        <div key={p.id} className="bg-white/5 p-4 rounded-lg border border-border-color">
+                            <div className="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 className="font-bold text-lg">{p.name}</h3>
+                                    <span className="text-[10px] text-text-secondary uppercase bg-white/5 px-2 py-0.5 rounded">{p.type}</span>
+                                </div>
+                                <div className="text-right">
+                                    <p className="font-header text-xl text-accent-color">${p.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between items-center mt-3 pt-3 border-t border-white/5">
+                                <div className="flex items-center">
+                                    <span className={`w-2 h-2 inline-block rounded-full mr-2 ${p.stock > 10 ? 'bg-success-color' : 'bg-danger-color'}`}></span>
+                                    <span className="text-sm font-semibold">{p.stock} {p.unit}</span>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => openModal(p)}
+                                        className="p-2 bg-accent-color/10 text-accent-color rounded"
+                                    >
+                                        <Edit2 size={18} />
+                                    </button>
+                                    <button
+                                        onClick={() => deleteProduct(p.id)}
+                                        className="p-2 bg-danger-color/10 text-danger-color rounded"
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    {filteredProducts.length === 0 && (
+                        <div className="p-10 text-center text-text-secondary">
+                            <Package className="mx-auto mb-3 opacity-20" size={48} />
+                            No se encontraron productos
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Modal */}
@@ -165,7 +209,7 @@ const InventoryView = () => {
                 onClose={() => setModalOpen(false)}
                 title={editingProduct ? 'Editar Producto' : 'Nuevo Producto'}
             >
-                <form onSubmit={handleSave} className="space-y-6">
+                <form onSubmit={handleSave} className="space-y-4 md:space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Nombre</label>
@@ -223,7 +267,7 @@ const InventoryView = () => {
                     {formData.type === 'PRODUCTO COMPUESTO' && (
                         <div className="space-y-4 pt-4 border-t border-border-color">
                             <h4 className="font-header text-accent-color uppercase italic">Receta / Composición</h4>
-                            <div className="flex gap-2 mb-4">
+                            <div className="flex flex-col md:flex-row gap-2 mb-4">
                                 <select
                                     className="militar-input flex-1"
                                     onChange={(e) => addIngredientRow(products.find(p => p.id === parseInt(e.target.value)))}
@@ -238,10 +282,10 @@ const InventoryView = () => {
                             <div className="space-y-2 max-h-40 overflow-auto pr-2">
                                 {ingredients.map((ing, idx) => (
                                     <div key={idx} className="flex items-center gap-3 p-2 bg-white/5 rounded">
-                                        <span className="flex-1 font-semibold">{ing.name}</span>
+                                        <span className="flex-1 font-semibold text-sm">{ing.name}</span>
                                         <input
                                             type="number" step="0.01"
-                                            className="militar-input w-24 py-1"
+                                            className="militar-input w-20 md:w-24 py-1 text-sm"
                                             value={ing.quantity}
                                             onChange={e => {
                                                 const newIngs = [...ingredients];
@@ -262,9 +306,9 @@ const InventoryView = () => {
                         </div>
                     )}
 
-                    <div className="flex justify-end gap-3 pt-6 border-t border-border-color">
-                        <button type="button" onClick={() => setModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold">Cancelar</button>
-                        <button type="submit" className="militar-btn uppercase font-header px-10">Guardar Item</button>
+                    <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-border-color">
+                        <button type="button" onClick={() => setModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
+                        <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Guardar Item</button>
                     </div>
                 </form>
             </Modal>

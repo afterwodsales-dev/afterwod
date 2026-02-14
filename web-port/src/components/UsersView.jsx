@@ -47,34 +47,34 @@ const UsersView = () => {
     if (loading) return <LoadingSpinner message="Cargando usuarios..." />;
 
     return (
-        <div className="p-6">
-            <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-header uppercase">Usuarios y Cartera</h2>
+        <div className="p-4 md:p-6 h-[calc(100vh-4rem)] flex flex-col">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl font-header uppercase">Usuarios y Cartera</h2>
                 <button
                     onClick={() => setUserModalOpen(true)}
-                    className="militar-btn flex items-center gap-2"
+                    className="militar-btn flex items-center justify-center gap-2 w-full md:w-auto"
                 >
                     <UserPlus size={20} /> NUEVO CLIENTE
                 </button>
             </div>
 
-            <div className="militar-card h-[70vh] flex flex-col">
+            <div className="militar-card flex-1 flex flex-col overflow-hidden">
                 {/* Search */}
-                <div className="relative mb-6">
+                <div className="relative mb-4 md:mb-6">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />
                     <input
                         type="text"
                         placeholder="Buscar por nombre o teléfono..."
-                        className="militar-input pl-10"
+                        className="militar-input pl-10 w-full"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
 
-                {/* Table */}
-                <div className="flex-1 overflow-auto">
+                {/* Desktop Table */}
+                <div className="hidden md:block flex-1 overflow-auto">
                     <table className="w-full text-left border-collapse">
-                        <thead className="sticky top-0 bg-card-bg border-b border-border-color">
+                        <thead className="sticky top-0 bg-card-bg border-b border-border-color z-10">
                             <tr>
                                 <th className="p-4 text-text-secondary font-semibold uppercase text-xs">ID</th>
                                 <th className="p-4 text-text-secondary font-semibold uppercase text-xs">Nombre / Contacto</th>
@@ -128,6 +128,52 @@ const UsersView = () => {
                         </tbody>
                     </table>
                 </div>
+
+                {/* Mobile Card List */}
+                <div className="md:hidden flex-1 overflow-auto space-y-3 pb-20">
+                    {filteredUsers.map(u => (
+                        <div key={u.id} className="bg-white/5 p-4 rounded-lg border border-border-color">
+                            <div className="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 className="font-bold text-lg">{u.name}</h3>
+                                    <p className="text-xs text-text-secondary flex items-center gap-1">
+                                        <Phone size={12} /> {u.phone || 'Sin teléfono'}
+                                    </p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-[10px] text-text-secondary uppercase">Saldo</p>
+                                    <p className={`font-header text-2xl ${u.balance > 0 ? 'text-accent-color' : 'text-success-color'}`}>
+                                        ${u.balance.toFixed(2)}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end gap-2 pt-3 border-t border-white/5">
+                                <button
+                                    onClick={() => { setSelectedUser(u); setPaymentModalOpen(true); }}
+                                    className="flex-1 py-2 bg-success-color/90 text-black rounded font-bold text-sm flex items-center justify-center gap-2"
+                                >
+                                    <Wallet size={16} /> ABONAR
+                                </button>
+                                <button
+                                    onClick={async () => {
+                                        if (window.confirm('¿Eliminar usuario?')) {
+                                            await deleteUser(u.id);
+                                        }
+                                    }}
+                                    className="p-2 bg-danger-color/10 text-danger-color rounded"
+                                >
+                                    <Trash2 size={18} />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                    {filteredUsers.length === 0 && (
+                        <div className="p-10 text-center text-text-secondary italic">
+                            No se encontraron usuarios registrados
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* User Modal */}
@@ -151,9 +197,9 @@ const UsersView = () => {
                             onChange={e => setUserFormData({ ...userFormData, phone: e.target.value })}
                         />
                     </div>
-                    <div className="flex justify-end gap-3 pt-6 border-t border-border-color">
-                        <button type="button" onClick={() => setUserModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold">Cancelar</button>
-                        <button type="submit" className="militar-btn uppercase font-header px-10">Registrar Cliente</button>
+                    <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-border-color">
+                        <button type="button" onClick={() => setUserModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
+                        <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Registrar Cliente</button>
                     </div>
                 </form>
             </Modal>
@@ -198,9 +244,9 @@ const UsersView = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-end gap-3 pt-10 border-t border-border-color">
-                        <button type="button" onClick={() => setPaymentModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold">Cancelar</button>
-                        <button type="submit" className="militar-btn uppercase font-header px-10">Confirmar Abono</button>
+                    <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-10 border-t border-border-color">
+                        <button type="button" onClick={() => setPaymentModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
+                        <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Confirmar Abono</button>
                     </div>
                 </form>
             </Modal>

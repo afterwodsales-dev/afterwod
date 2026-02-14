@@ -16,7 +16,7 @@
   --border-color: #252525;
   --corner-radius: 15px;
   --border-width: 2px;
-  
+
   --font-header: 'Impact', sans-serif;
   --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
@@ -35,7 +35,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-header);
   letter-spacing: 0.05em;
 }
@@ -45,7 +50,9 @@ button {
   font-family: inherit;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   font-family: inherit;
   background-color: transparent;
   color: inherit;
@@ -92,4 +99,35 @@ input, select, textarea {
 .militar-input:focus {
   border-color: var(--accent-color);
   outline: none;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
 }
