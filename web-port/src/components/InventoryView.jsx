@@ -262,17 +262,22 @@ const InventoryView = () => {
                         </div>
                     </div>
 
-                    <div>
-                        <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Tipo de Producto</label>
+                    <div className="bg-accent-color/5 p-4 rounded-xl border border-accent-color/20 shadow-inner">
+                        <label className="text-xs font-bold uppercase text-accent-color mb-2 block">Tipo de Producto / Combo</label>
                         <select
-                            className="militar-input"
+                            className="militar-input border-accent-color/30"
                             value={formData.type}
                             onChange={e => setFormData({ ...formData, type: e.target.value })}
                         >
-                            <option value="PRODUCTO SIMPLE">PRODUCTO SIMPLE</option>
-                            <option value="INSUMO">INSUMO</option>
-                            <option value="PRODUCTO COMPUESTO">PRODUCTO COMPUESTO (CON RECETA)</option>
+                            <option value="PRODUCTO SIMPLE">📦 PRODUCTO SIMPLE (Stock se resta solo)</option>
+                            <option value="INSUMO">🧬 INSUMO (Materia Prima)</option>
+                            <option value="PRODUCTO COMPUESTO">🍱 PRODUCTO COMPUESTO (Usa Receta / Insumos)</option>
                         </select>
+                        <p className="text-[10px] text-text-secondary mt-2 italic px-1">
+                            {formData.type === 'PRODUCTO COMPUESTO' ?
+                                '💡 Este producto no tiene stock propio, descuenta de sus ingredientes automáticamente.' :
+                                '💡 Este producto descuenta su propia cantidad al venderse.'}
+                        </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

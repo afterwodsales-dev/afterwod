@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Search, History as HistoryIcon, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
+import { Search, History as HistoryIcon, ArrowUpRight, ArrowDownLeft, Trash2 } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import LoadingSpinner from './LoadingSpinner';
 
 const HistoryView = () => {
-    const { getCombinedHistory, loading } = useStore();
+    const { getCombinedHistory, deleteSale, deletePayment, loading } = useStore();
     const [searchTerm, setSearchTerm] = useState('');
 
     const history = getCombinedHistory();
@@ -12,6 +12,20 @@ const HistoryView = () => {
         h.detail.toLowerCase().includes(searchTerm.toLowerCase()) ||
         h.type.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const handleDelete = async (item) => {
+        if (!window.confirm(`¿Seguro que deseas ELIMINAR este registro? Se revertirá el stock y balance afectado.`)) return;
+
+        try {
+            if (item.type === 'VENTA') {
+                await deleteSale(item.id);
+            } else {
+                await deletePayment(item.id);
+            }
+        } catch (error) {
+            alert('Error al eliminar registro');
+        }
+    };
 
     if (loading) return <LoadingSpinner message="Cargando historial..." />;
 
@@ -66,6 +80,15 @@ const HistoryView = () => {
                                     <td className="p-4 text-xs text-text-secondary">
                                         {new Date(h.date).toLocaleString()}
                                     </td>
+                                    <td className="p-4 text-right">
+                                        <button
+                                            onClick={() => handleDelete(h)}
+                                            className="p-2 text-danger-color hover:bg-danger-color/10 rounded transition-colors"
+                                            title="Eliminar Registro"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                             {filteredHistory.length === 0 && (
@@ -102,7 +125,13 @@ const HistoryView = () => {
                             <h3 className="font-semibold text-sm mb-1">{h.detail}</h3>
                             <p className="text-xs text-text-secondary mb-3">{h.info}</p>
 
-                            <div className="text-right border-t border-white/5 pt-2">
+                            <div className="flex justify-between items-center border-t border-white/5 pt-2 mt-3">
+                                <button
+                                    onClick={() => handleDelete(h)}
+                                    className="p-2 text-danger-color bg-danger-color/5 rounded flex items-center gap-2 text-xs uppercase font-bold"
+                                >
+                                    <Trash2 size={14} /> Borrar
+                                </button>
                                 <p className="font-header text-xl">${(h.amount || 0).toFixed(2)}</p>
                             </div>
                         </div>

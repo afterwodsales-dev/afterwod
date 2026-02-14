@@ -195,69 +195,26 @@ export const StoreProvider = ({ children }) => {
     const total = parseFloat(totalPrice);
     const batch = writeBatch(db);
 
-    // 1. Recursive Stock Deduction
-    // Since we can't easily do recursion inside a batch across multiple reads/writes without being careful,
-    // we calculate the deductions first based on current state (products/recipes) which we already have in local state!
-    // This is optimistic but risky for high concurrency. For this app, it's acceptable.
+    const deductions = new Map();
 
-    const deductions = new Map(); // id -> qty to deduct
-
-    const accumulateDeduction = (pid, q) => {
-      const current = deductions.get(pid) || 0;
-      deductions.set(pid, current + q);
-
-      const productRecipes = recipes.filter(r => r.productId === pid);
-      if (productRecipes.length > 0) {
-        productRecipes.forEach(item => {
-          accumulateDeduction(item.ingredientId, item.quantity * q);
-        });
-      } else {
-        // Base case: it's a simple product or insumo with no recipe, so it consumes itself
-        // But wait, if it HAS a recipe, does it consume itself? 
-        // Python logic: "else: update products set stock..."
-        // So ONLY leaf nodes (no recipe) are deducted.
-        // If I am a parent node (Juice) made of Water and Sugar, I don't decrement "Juice" stock, I decrement Water and Sugar.
-        // UNLESS "Juice" is premade. But the logic says "if recipe... else update".
-        // The issue is: if I sell a "Juice", do I imply I made it on the spot?
-        // Python code: "deduct_recipe_recursive... if recipe: recursive... else: update stock".
-        // So yes, only leaf ingredients are deducted.
-
-        // HOWEVER, what if I sell a Product that HAS NO recipe? It deduces itself.
-        // My recursion above:
-        // accumulateDeduction(pid, q) called for the sold item.
-        // If it has children, call for children.
-        // If it HAS children, it does NOT deduct itself in the Python code?
-        // Python: `if recipe: for ... recursive ... else: update stock`. 
-        // YES. So if it has ingredients, the parent stock is NOT touched? 
-        // Correct. The parent is "virtual" availability based on ingredients. 
-        // OR the parent stock is irrelevant?
-        // Actually, for "Product Compuesto", usually stock is 0 and it's built on demand.
-        // So I should only add to `deductions` map if it has NO recipe.
-      }
-    };
-
-    // We need a slight modification to the helper to separate "traversal" from "deduction decision"
     const traverse = (pid, q) => {
       const productRecipes = recipes.filter(r => String(r.productId) === String(pid));
       if (productRecipes.length > 0) {
         productRecipes.forEach(item => traverse(item.ingredientId, item.quantity * q));
       } else {
-        // Leaf node
         const current = deductions.get(String(pid)) || 0;
         deductions.set(String(pid), current + q);
       }
-    }
+    };
 
     traverse(productId, qty);
 
-    // Apply deductions to Batch
     deductions.forEach((dQty, pid) => {
       const pRef = doc(db, 'products', pid);
       const currentStock = products.find(p => String(p.id) === String(pid))?.stock || 0;
       batch.update(pRef, { stock: currentStock - dQty });
     });
 
-    // 2. Record Sale
     const saleRef = doc(collection(db, 'sales'));
     batch.set(saleRef, {
       productId,
@@ -268,9 +225,8 @@ export const StoreProvider = ({ children }) => {
       saleDate: new Date().toISOString()
     });
 
-    // 3. Update User Balance
     if (userId) {
-      const user = users.find(u => u.id === userId);
+      const user = users.find(u => String(u.id) === String(userId));
       if (user) {
         const uRef = doc(db, 'users', userId);
         batch.update(uRef, { balance: (user.balance || 0) + total });
@@ -280,20 +236,47 @@ export const StoreProvider = ({ children }) => {
     await batch.commit();
   };
 
+  const deleteSale = async (id) => {
+    const sale = sales.find(s => String(s.id) === String(id));
+    if (!sale) return;
+
+    const batch = writeBatch(db);
+
+    const traverseRevert = (pid, q) => {
+      const productRecipes = recipes.filter(r => String(r.productId) === String(pid));
+      if (productRecipes.length > 0) {
+        productRecipes.forEach(item => traverseRevert(item.ingredientId, item.quantity * q));
+      } else {
+        const pRef = doc(db, 'products', String(pid));
+        const currentStock = products.find(p => String(p.id) === String(pid))?.stock || 0;
+        batch.update(pRef, { stock: currentStock + q });
+      }
+    };
+    traverseRevert(sale.productId, sale.quantity);
+
+    if (sale.userId) {
+      const user = users.find(u => String(u.id) === String(sale.userId));
+      if (user) {
+        const uRef = doc(db, 'users', sale.userId);
+        batch.update(uRef, { balance: (user.balance || 0) - (sale.totalPrice || 0) });
+      }
+    }
+
+    batch.delete(doc(db, 'sales', id));
+    await batch.commit();
+  };
 
   // --- Payment Logic ---
   const recordPayment = async (userId, amount, method) => {
     const val = parseFloat(amount);
     const batch = writeBatch(db);
 
-    // Update User
-    const user = users.find(u => u.id === userId);
+    const user = users.find(u => String(u.id) === String(userId));
     if (user) {
       const uRef = doc(db, 'users', userId);
       batch.update(uRef, { balance: (user.balance || 0) - val });
     }
 
-    // Record Payment
     const payRef = doc(collection(db, 'payments'));
     batch.set(payRef, {
       userId,
@@ -305,16 +288,32 @@ export const StoreProvider = ({ children }) => {
     await batch.commit();
   };
 
+  const deletePayment = async (id) => {
+    const payment = payments.find(p => String(p.id) === String(id));
+    if (!payment) return;
+
+    const batch = writeBatch(db);
+
+    if (payment.userId) {
+      const user = users.find(u => String(u.id) === String(payment.userId));
+      if (user) {
+        const uRef = doc(db, 'users', payment.userId);
+        batch.update(uRef, { balance: (user.balance || 0) + (payment.amount || 0) });
+      }
+    }
+
+    batch.delete(doc(db, 'payments', id));
+    await batch.commit();
+  };
+
   // --- Aggregate Logic ---
   const getFinancialSummary = () => {
     const totalSales = sales.reduce((acc, s) => acc + (s.totalPrice || 0), 0);
     const totalPurchases = purchases.reduce((acc, p) => acc + (p.costPrice || 0), 0);
-
     const userStats = users.map(u => {
-      const userSales = sales.filter(s => s.userId === u.id).reduce((acc, s) => acc + (s.totalPrice || 0), 0);
+      const userSales = sales.filter(s => String(s.userId) === String(u.id)).reduce((acc, s) => acc + (s.totalPrice || 0), 0);
       return { id: u.id, name: u.name, totalBought: userSales, balance: u.balance };
     });
-
     return { totalSales, totalPurchases, userStats };
   };
 
@@ -322,7 +321,7 @@ export const StoreProvider = ({ children }) => {
     const sMapped = sales.map(s => ({
       id: s.id,
       type: 'VENTA',
-      detail: products.find(p => p.id === s.productId)?.name || 'Desconocido',
+      detail: products.find(p => String(p.id) === String(s.productId))?.name || 'Desconocido',
       info: s.quantity.toString(),
       amount: s.totalPrice,
       date: s.saleDate
@@ -331,7 +330,7 @@ export const StoreProvider = ({ children }) => {
     const pMapped = payments.map(p => ({
       id: p.id,
       type: 'PAGO',
-      detail: users.find(u => u.id === p.userId)?.name || 'Desconocido',
+      detail: users.find(u => String(u.id) === String(p.userId))?.name || 'Desconocido',
       info: p.method,
       amount: p.amount,
       date: p.paymentDate
@@ -346,9 +345,9 @@ export const StoreProvider = ({ children }) => {
       products, addProduct, updateProduct, deleteProduct,
       users, addUser, deleteUser,
       recipes, addRecipeItem, deleteRecipe,
-      sales, recordSale,
+      sales, recordSale, deleteSale,
       purchases, recordPurchase,
-      payments, recordPayment,
+      payments, recordPayment, deletePayment,
       getFinancialSummary, getCombinedHistory
     }}>
       {children}
