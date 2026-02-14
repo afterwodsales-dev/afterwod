@@ -21,34 +21,34 @@ const Dashboard = () => {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 <div className="militar-card flex items-center justify-between group hover:border-success-color transition-colors p-4 md:p-6">
-                    <div>
-                        <p className="text-text-secondary text-xs md:text-sm font-bold uppercase mb-1">Ingresos de Hoy</p>
-                        <p className="text-3xl md:text-4xl font-header text-success-color">${totalSales.toFixed(2)}</p>
+                    <div className="min-w-0">
+                        <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Ingresos Hoy</p>
+                        <p className="text-2xl md:text-4xl font-header text-success-color truncate">${totalSales.toFixed(2)}</p>
                     </div>
-                    <div className="bg-success-color/10 p-3 md:p-4 rounded-full text-success-color">
-                        <TrendingUp size={24} className="md:w-8 md:h-8" />
+                    <div className="bg-success-color/10 p-3 md:p-4 rounded-full text-success-color shrink-0 ml-2">
+                        <TrendingUp size={20} className="md:w-8 md:h-8" />
                     </div>
                 </div>
 
                 <div className="militar-card flex items-center justify-between group hover:border-danger-color transition-colors p-4 md:p-6">
-                    <div>
-                        <p className="text-text-secondary text-xs md:text-sm font-bold uppercase mb-1">Inversión Stock</p>
-                        <p className="text-3xl md:text-4xl font-header text-danger-color">${totalPurchases.toFixed(2)}</p>
+                    <div className="min-w-0">
+                        <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Inv. Stock</p>
+                        <p className="text-2xl md:text-4xl font-header text-danger-color truncate">${totalPurchases.toFixed(2)}</p>
                     </div>
-                    <div className="bg-danger-color/10 p-3 md:p-4 rounded-full text-danger-color">
-                        <TrendingDown size={24} className="md:w-8 md:h-8" />
+                    <div className="bg-danger-color/10 p-3 md:p-4 rounded-full text-danger-color shrink-0 ml-2">
+                        <TrendingDown size={20} className="md:w-8 md:h-8" />
                     </div>
                 </div>
 
                 <div className="militar-card flex items-center justify-between group hover:border-accent-color transition-colors p-4 md:p-6">
-                    <div>
-                        <p className="text-text-secondary text-xs md:text-sm font-bold uppercase mb-1">Balance Bruto</p>
-                        <p className={`text-3xl md:text-4xl font-header ${profit >= 0 ? 'text-accent-color' : 'text-danger-color'}`}>
+                    <div className="min-w-0">
+                        <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Balance Bruto</p>
+                        <p className={`text-2xl md:text-4xl font-header truncate ${profit >= 0 ? 'text-accent-color' : 'text-danger-color'}`}>
                             ${profit.toFixed(2)}
                         </p>
                     </div>
-                    <div className="bg-accent-color/10 p-3 md:p-4 rounded-full text-accent-color">
-                        <Activity size={24} className="md:w-8 md:h-8" />
+                    <div className="bg-accent-color/10 p-3 md:p-4 rounded-full text-accent-color shrink-0 ml-2">
+                        <Activity size={20} className="md:w-8 md:h-8" />
                     </div>
                 </div>
             </div>

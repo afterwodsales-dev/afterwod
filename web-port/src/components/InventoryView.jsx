@@ -174,8 +174,9 @@ const InventoryView = () => {
 
                             <div className="flex justify-between items-center mt-3 pt-3 border-t border-white/5">
                                 <div className="flex items-center">
-                                    <span className={`w-2 h-2 inline-block rounded-full mr-2 ${p.stock > 10 ? 'bg-success-color' : 'bg-danger-color'}`}></span>
-                                    <span className="text-sm font-semibold">{p.stock} {p.unit}</span>
+                                    <span className={`w-2.5 h-2.5 inline-block rounded-full mr-2 ${p.stock > 10 ? 'bg-success-color' : 'bg-danger-color'}`}></span>
+                                    <span className="text-sm font-semibold text-text-secondary">{p.stock}</span>
+                                    <span className="text-[10px] text-text-secondary ml-1 uppercase">({p.unit})</span>
                                 </div>
                                 <div className="flex gap-2">
                                     <button
@@ -281,25 +282,29 @@ const InventoryView = () => {
                             </div>
                             <div className="space-y-2 max-h-40 overflow-auto pr-2">
                                 {ingredients.map((ing, idx) => (
-                                    <div key={idx} className="flex items-center gap-3 p-2 bg-white/5 rounded">
-                                        <span className="flex-1 font-semibold text-sm">{ing.name}</span>
-                                        <input
-                                            type="number" step="0.01"
-                                            className="militar-input w-20 md:w-24 py-1 text-sm"
-                                            value={ing.quantity}
-                                            onChange={e => {
-                                                const newIngs = [...ingredients];
-                                                newIngs[idx].quantity = parseFloat(e.target.value);
-                                                setIngredients(newIngs);
-                                            }}
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setIngredients(ingredients.filter((_, i) => i !== idx))}
-                                            className="text-danger-color p-1 hover:bg-danger-color/10 rounded"
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
+                                    <div key={idx} className="flex items-center gap-2 p-3 bg-white/5 rounded-lg border border-white/5">
+                                        <div className="flex-1 min-w-0">
+                                            <p className="font-semibold text-sm truncate">{ing.name}</p>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <input
+                                                type="number" step="0.01"
+                                                className="militar-input w-20 py-1.5 text-center text-sm"
+                                                value={ing.quantity}
+                                                onChange={e => {
+                                                    const newIngs = [...ingredients];
+                                                    newIngs[idx].quantity = parseFloat(e.target.value);
+                                                    setIngredients(newIngs);
+                                                }}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setIngredients(ingredients.filter((_, i) => i !== idx))}
+                                                className="text-danger-color p-2 hover:bg-danger-color/10 rounded-full transition-colors"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
