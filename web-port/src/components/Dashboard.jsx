@@ -32,7 +32,7 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="militar-card flex items-center justify-between group hover:border-danger-color transition-colors p-4 md:p-6">
+                <div className="afterwod-card flex items-center justify-between group hover:border-danger-color transition-colors p-4 md:p-6">
                     <div className="min-w-0">
                         <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Inv. Stock</p>
                         <p className="text-2xl md:text-4xl font-header text-danger-color truncate">${(totalPurchases || 0).toFixed(2)}</p>
@@ -42,7 +42,7 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="militar-card flex items-center justify-between group hover:border-accent-color transition-colors p-4 md:p-6">
+                <div className="afterwod-card flex items-center justify-between group hover:border-accent-color transition-colors p-4 md:p-6">
                     <div className="min-w-0">
                         <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Balance Bruto</p>
                         <p className={`text-2xl md:text-4xl font-header truncate ${profit >= 0 ? 'text-accent-color' : 'text-danger-color'}`}>
@@ -57,7 +57,7 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Debtors Section (Moved to Top) */}
-                <div className="lg:col-span-2 militar-card bg-sidebar-color border-accent-color/30">
+                <div className="lg:col-span-2 afterwod-card bg-sidebar-color border-accent-color/30">
                     <div className="flex items-center justify-between mb-6">
                         <h3 className="text-xl font-header uppercase flex items-center gap-2">
                             <AlertCircle className="text-accent-color" size={24} />
@@ -128,7 +128,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* User Stats Table */}
-                <div className="militar-card overflow-hidden">
+                <div className="afterwod-card overflow-hidden">
                     <div className="flex items-center gap-2 mb-6 border-b border-border-color pb-4">
                         <UsersIcon className="text-accent-color" size={20} />
                         <h3 className="text-lg md:text-xl font-header uppercase">Rendimiento por Cliente</h3>
@@ -152,7 +152,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Info Card */}
-                <div className="militar-card flex flex-col justify-center items-center text-center p-8 md:p-12 bg-gradient-to-br from-card-bg to-sidebar-color border-white/5">
+                <div className="afterwod-card flex flex-col justify-center items-center text-center p-8 md:p-12 bg-gradient-to-br from-card-bg to-sidebar-color border-white/5">
                     <img src="logo.png" alt="Logo" className="w-24 md:w-32 opacity-10 mb-6 grayscale" />
                     <h3 className="text-xl md:text-2xl font-header text-text-secondary opacity-50 uppercase italic tracking-widest">
                         Afterwod v2.0

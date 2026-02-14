@@ -183,7 +183,7 @@ const UsersView = () => {
                         <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Nombre Completo</label>
                         <input
                             required
-                            className="militar-input text-lg"
+                            className="afterwod-input text-lg"
                             value={userFormData.name}
                             onChange={e => setUserFormData({ ...userFormData, name: e.target.value })}
                             autoFocus
@@ -192,14 +192,14 @@ const UsersView = () => {
                     <div>
                         <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Teléfono / WhatsApp</label>
                         <input
-                            className="militar-input"
+                            className="afterwod-input"
                             value={userFormData.phone}
                             onChange={e => setUserFormData({ ...userFormData, phone: e.target.value })}
                         />
                     </div>
                     <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-border-color">
-                        <button type="button" onClick={() => setUserModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
-                        <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Registrar Cliente</button>
+                        <button type="button" onClick={() => setUserModalOpen(false)} className="afterwod-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
+                        <button type="submit" className="afterwod-btn uppercase font-header w-full md:w-auto px-10">Registrar Cliente</button>
                     </div>
                 </form>
             </Modal>
@@ -221,7 +221,7 @@ const UsersView = () => {
                             <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Monto del Abono ($)</label>
                             <input
                                 type="number" step="0.01" required
-                                className="militar-input text-2xl text-center"
+                                className="afterwod-input text-2xl text-center"
                                 value={paymentData.amount}
                                 onChange={e => setPaymentData({ ...paymentData, amount: e.target.value })}
                                 autoFocus
@@ -245,8 +245,8 @@ const UsersView = () => {
                     </div>
 
                     <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-10 border-t border-border-color">
-                        <button type="button" onClick={() => setPaymentModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
-                        <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Confirmar Abono</button>
+                        <button type="button" onClick={() => setPaymentModalOpen(false)} className="afterwod-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
+                        <button type="submit" className="afterwod-btn uppercase font-header w-full md:w-auto px-10">Confirmar Abono</button>
                     </div>
                 </form>
             </Modal>

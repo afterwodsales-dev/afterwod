@@ -102,7 +102,7 @@ const SalesView = () => {
                                     <input
                                         type="text"
                                         placeholder="Buscar..."
-                                        className="militar-input py-2 pl-9 md:pl-10 text-sm"
+                                        className="afterwod-input py-2 pl-9 md:pl-10 text-sm"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                     />
@@ -114,7 +114,7 @@ const SalesView = () => {
                                     <button
                                         key={p.id}
                                         onClick={() => addToCart(p)}
-                                        className="militar-card hover:border-accent-color p-4 text-left transition-all active:scale-95 group relative overflow-hidden"
+                                        className="afterwod-card hover:border-accent-color p-4 text-left transition-all active:scale-95 group relative overflow-hidden"
                                     >
                                         <div className="absolute top-0 right-0 p-1 px-2 bg-accent-color/10 text-accent-color text-[9px] font-bold">
                                             {p.type.split(' ')[1] || 'SIMPLE'}
@@ -129,7 +129,7 @@ const SalesView = () => {
                     </div>
 
                     {/* Cart & Checkout */}
-                    <div className={`militar-card flex-col h-full bg-sidebar-color ${activeTab !== 'cart' ? 'hidden lg:flex' : 'flex'}`}>
+                    <div className={`afterwod-card flex-col h-full bg-sidebar-color ${activeTab !== 'cart' ? 'hidden lg:flex' : 'flex'}`}>
                         <div className="flex items-center gap-2 mb-4 md:mb-6 border-b border-border-color pb-4">
                             <ShoppingCart className="text-accent-color" size={24} />
                             <h3 className="text-lg md:text-xl font-header uppercase">Carrito de Venta</h3>
@@ -186,7 +186,7 @@ const SalesView = () => {
                                     {paymentMethod === 'Fiado' ? 'Cliente Obligatorio' : 'Cliente Opcional (Para WhatsApp)'}
                                 </label>
                                 <select
-                                    className={`militar-input text-sm p-3 w-full ${paymentMethod === 'Fiado' ? 'border-accent-color' : 'border-border-color'}`}
+                                    className={`afterwod-input text-sm p-3 w-full ${paymentMethod === 'Fiado' ? 'border-accent-color' : 'border-border-color'}`}
                                     onChange={(e) => setSelectedUser(users.find(u => String(u.id) === String(e.target.value)) || null)}
                                     value={selectedUser?.id || ""}
                                 >
@@ -211,7 +211,7 @@ const SalesView = () => {
 
                             <button
                                 onClick={handleFinishSale}
-                                className={`militar-btn w-full py-4 text-lg font-header flex items-center justify-center gap-2 ${paymentMethod === 'Fiado' && !selectedUser ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
+                                className={`afterwod-btn w-full py-4 text-lg font-header flex items-center justify-center gap-2 ${paymentMethod === 'Fiado' && !selectedUser ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
                             >
                                 {paymentMethod === 'Fiado' ? <CreditCard size={20} /> : <Banknote size={20} />}
                                 {paymentMethod === 'Fiado' ? 'CARGAR A CUENTA' : 'COBRAR EN EFECTIVO'}

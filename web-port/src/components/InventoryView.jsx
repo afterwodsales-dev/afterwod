@@ -121,14 +121,14 @@ const InventoryView = () => {
                 </div>
             </div>
 
-            <div className="militar-card flex-1 flex flex-col overflow-hidden">
+            <div className="afterwod-card flex-1 flex flex-col overflow-hidden">
                 {/* Search */}
                 <div className="relative mb-4 md:mb-6">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />
                     <input
                         type="text"
                         placeholder="Buscar por nombre o categoría..."
-                        className="militar-input pl-10 w-full"
+                        className="afterwod-input pl-10 w-full"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -247,7 +247,7 @@ const InventoryView = () => {
                             <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Nombre</label>
                             <input
                                 required
-                                className="militar-input"
+                                className="afterwod-input"
                                 value={formData.name}
                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
                             />
@@ -255,7 +255,7 @@ const InventoryView = () => {
                         <div>
                             <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Categoría</label>
                             <input
-                                className="militar-input"
+                                className="afterwod-input"
                                 value={formData.category}
                                 onChange={e => setFormData({ ...formData, category: e.target.value })}
                             />
@@ -265,7 +265,7 @@ const InventoryView = () => {
                     <div className="bg-accent-color/5 p-4 rounded-xl border border-accent-color/20 shadow-inner">
                         <label className="text-xs font-bold uppercase text-accent-color mb-2 block">Tipo de Producto / Combo</label>
                         <select
-                            className="militar-input border-accent-color/30"
+                            className="afterwod-input border-accent-color/30"
                             value={formData.type}
                             onChange={e => setFormData({ ...formData, type: e.target.value })}
                         >
@@ -285,7 +285,7 @@ const InventoryView = () => {
                             <div>
                                 <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Precio de Venta ($)</label>
                                 <input
-                                    type="number" step="0.01" className="militar-input"
+                                    type="number" step="0.01" className="afterwod-input"
                                     value={formData.price}
                                     onChange={e => setFormData({ ...formData, price: e.target.value })}
                                 />
@@ -298,7 +298,7 @@ const InventoryView = () => {
                             <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Stock Inicial / Actual</label>
                             <input
                                 type="number" step="0.01"
-                                className={`militar-input ${formData.type === 'PRODUCTO COMPUESTO' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`afterwod-input ${formData.type === 'PRODUCTO COMPUESTO' ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 value={formData.stock}
                                 onChange={e => setFormData({ ...formData, stock: e.target.value })}
                                 disabled={formData.type === 'PRODUCTO COMPUESTO'}
@@ -308,7 +308,7 @@ const InventoryView = () => {
                         <div>
                             <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Unidad (ml, gr, unid...)</label>
                             <input
-                                className="militar-input"
+                                className="afterwod-input"
                                 value={formData.unit}
                                 onChange={e => setFormData({ ...formData, unit: e.target.value })}
                             />
@@ -323,7 +323,7 @@ const InventoryView = () => {
                             <div className="flex flex-col md:flex-row gap-2">
                                 <select
                                     id="ingredient-selector"
-                                    className="militar-input flex-1 text-sm"
+                                    className="afterwod-input flex-1 text-sm"
                                     defaultValue=""
                                 >
                                     <option value="" disabled>Seleccionar Ingrediente...</option>
@@ -345,7 +345,7 @@ const InventoryView = () => {
                                             select.value = ""; // Reset
                                         }
                                     }}
-                                    className="militar-btn px-4 py-2 flex items-center gap-2 text-xs"
+                                    className="afterwod-btn px-4 py-2 flex items-center gap-2 text-xs"
                                 >
                                     <Plus size={14} /> AGREGAR
                                 </button>
@@ -366,7 +366,7 @@ const InventoryView = () => {
                                             <span className="text-[10px] text-text-secondary">Cant:</span>
                                             <input
                                                 type="number" step="0.01"
-                                                className="militar-input w-20 py-1 text-center text-xs border-accent-color font-bold bg-white/10"
+                                                className="afterwod-input w-20 py-1 text-center text-xs border-accent-color font-bold bg-white/10"
                                                 value={ing.quantity}
                                                 onChange={e => {
                                                     const newIngs = [...ingredients];
@@ -388,8 +388,8 @@ const InventoryView = () => {
                         </div>
                     )}
                     <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-border-color">
-                        <button type="button" onClick={() => setModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
-                        <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Guardar Item</button>
+                        <button type="button" onClick={() => setModalOpen(false)} className="afterwod-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
+                        <button type="submit" className="afterwod-btn uppercase font-header w-full md:w-auto px-10">Guardar Item</button>
                     </div>
                 </form>
             </Modal>
@@ -421,17 +421,17 @@ const InventoryView = () => {
                             <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Cantidad Adquirida</label>
                             <input
                                 type="number" step="0.01" required
-                                className="militar-input text-xl text-center font-header"
+                                className="afterwod-input text-xl text-center font-header"
                                 placeholder="0.00"
-                                value={purchaseData.quantity}
-                                onChange={e => setPurchaseData({ ...purchaseData, quantity: e.target.value })}
+                                value={purchaseData.price}
+                                onChange={e => setPurchaseData({ ...purchaseData, price: e.target.value })}
                             />
                         </div>
                         <div>
-                            <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Costo Total ($)</label>
+                            <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Total a Pagar</label>
                             <input
-                                type="number" step="0.01" required
-                                className="militar-input text-xl text-center font-header text-accent-color"
+                                readOnly
+                                className="afterwod-input text-xl text-center font-header text-accent-color"
                                 placeholder="0.00"
                                 value={purchaseData.totalCost}
                                 onChange={e => setPurchaseData({ ...purchaseData, totalCost: e.target.value })}
@@ -447,8 +447,8 @@ const InventoryView = () => {
                     </div>
 
                     <div className="flex flex-col-reverse md:flex-row justify-end gap-3 pt-6 border-t border-border-color">
-                        <button type="button" onClick={() => setPurchaseModalOpen(false)} className="militar-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
-                        <button type="submit" className="militar-btn uppercase font-header w-full md:w-auto px-10">Confirmar Compra</button>
+                        <button type="button" onClick={() => setPurchaseModalOpen(false)} className="afterwod-btn-secondary uppercase text-xs font-bold w-full md:w-auto text-center">Cancelar</button>
+                        <button type="submit" className="afterwod-btn uppercase font-header w-full md:w-auto px-10">Confirmar Compra</button>
                     </div>
                 </form>
             </Modal>
