@@ -58,14 +58,14 @@ const UsersView = () => {
                 </button>
             </div>
 
-            <div className="militar-card flex-1 flex flex-col overflow-hidden">
+            <div className="afterwod-card flex-1 flex flex-col overflow-hidden">
                 {/* Search */}
                 <div className="relative mb-4 md:mb-6">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />
                     <input
                         type="text"
                         placeholder="Buscar por nombre o teléfono..."
-                        className="militar-input pl-10 w-full"
+                        className="afterwod-input pl-10 w-full"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />

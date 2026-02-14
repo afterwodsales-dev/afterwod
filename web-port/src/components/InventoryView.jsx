@@ -114,7 +114,7 @@ const InventoryView = () => {
                     </button>
                     <button
                         onClick={() => openModal()}
-                        className="militar-btn flex items-center justify-center gap-2 flex-1 md:flex-none"
+                        className="afterwod-btn flex items-center justify-center gap-2 flex-1 md:flex-none"
                     >
                         <Plus size={20} /> NUEVO ITEM
                     </button>
@@ -405,7 +405,7 @@ const InventoryView = () => {
                         <label className="text-xs font-bold uppercase text-text-secondary mb-2 block">Seleccionar Producto / Insumo</label>
                         <select
                             required
-                            className="militar-input"
+                            className="afterwod-input"
                             value={purchaseData.productId}
                             onChange={e => setPurchaseData({ ...purchaseData, productId: e.target.value })}
                         >

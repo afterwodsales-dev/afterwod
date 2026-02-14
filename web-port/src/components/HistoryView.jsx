@@ -42,7 +42,7 @@ const HistoryView = () => {
                     <input
                         type="text"
                         placeholder="Buscar por detalle o tipo..."
-                        className="militar-input pl-10 w-full"
+                        className="afterwod-input pl-10 w-full"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
