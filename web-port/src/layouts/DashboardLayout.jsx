@@ -76,9 +76,9 @@ export default function DashboardLayout() {
                 `}
             >
                 <div className="p-4 border-b border-[var(--border-color)] flex items-center justify-between h-16 shrink-0">
-                    <div className={`flex items-center gap-3 ${!isSidebarOpen && 'md:hidden'}`}>
-                        <img src="/logo.png" alt="Militar Box" className="h-10 hidden md:block" />
-                        <span className="font-[var(--font-header)] text-xl text-[var(--accent-color)] truncate">MILITAR BOX</span>
+                    <div className="flex items-center gap-3">
+                        <img src="/logo.png" alt="Militar Box" className={`h-10 transition-all ${isSidebarOpen ? 'w-10' : 'w-8 ml-[-4px]'}`} />
+                        {isSidebarOpen && <span className="font-[var(--font-header)] text-xl text-[var(--accent-color)] truncate animate-fade-in">MILITAR BOX</span>}
                     </div>
 
                     {/* Desktop Toggle */}
