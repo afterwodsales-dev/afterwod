@@ -199,13 +199,17 @@ export const StoreProvider = ({ children }) => {
     const deductions = new Map();
 
     const traverse = (pid, q) => {
+      // Find recipes for this specific product ID (ensuring both are cast to String)
       const productRecipes = recipes.filter(r => String(r.productId) === String(pid));
+
       if (productRecipes.length > 0) {
+        // It's a compound product: traverse children
         productRecipes.forEach(item => {
-          const multiplier = Number(item.quantity) || 1;
-          traverse(item.ingredientId, multiplier * q);
+          const itemMultiplier = Number(item.quantity) || 1;
+          traverse(String(item.ingredientId), itemMultiplier * q);
         });
       } else {
+        // Base case: it's a leaf/simple product, record the final deduction
         const current = deductions.get(String(pid)) || 0;
         deductions.set(String(pid), current + q);
       }

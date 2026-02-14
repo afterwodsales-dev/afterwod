@@ -147,17 +147,37 @@ const SalesView = () => {
                         <div className="mt-auto space-y-4 pt-4 border-t border-border-color">
                             {/* User selector */}
                             <div>
-                                <label className="text-xs text-text-secondary uppercase mb-2 block font-bold">Cliente (Opcional)</label>
-                                <select
-                                    className="militar-input text-sm p-3 w-full"
-                                    onChange={(e) => setSelectedUser(users.find(u => u.id === parseInt(e.target.value)))}
-                                    value={selectedUser?.id || ""}
-                                >
-                                    <option value="">Venta al Público (Contado)</option>
-                                    {users.map(u => (
-                                        <option key={u.id} value={u.id}>{u.name} (Saldo: ${(u.balance || 0).toFixed(2)})</option>
-                                    ))}
-                                </select>
+                                <label className="text-xs text-text-secondary uppercase mb-2 block font-bold">Tipo de Cobro / Cliente</label>
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-2">
+                                        <select
+                                            className={`militar-input text-sm p-3 w-full border-2 ${selectedUser ? 'border-accent-color' : 'border-success-color'}`}
+                                            onChange={(e) => {
+                                                const val = e.target.value;
+                                                if (val === "") {
+                                                    setSelectedUser(null);
+                                                } else {
+                                                    setSelectedUser(users.find(u => String(u.id) === String(val)));
+                                                }
+                                            }}
+                                            value={selectedUser?.id || ""}
+                                        >
+                                            <option value="">🛒 VENTA AL CONTADO (Efectivo)</option>
+                                            <optgroup label="CRÉDITO A CLIENTE (FIADO)">
+                                                {users.map(u => (
+                                                    <option key={u.id} value={u.id}>🪖 {u.name} (Debe: ${(u.balance || 0).toFixed(2)})</option>
+                                                ))}
+                                            </optgroup>
+                                        </select>
+                                    </div>
+
+                                    {selectedUser && (
+                                        <div className="bg-accent-color/10 p-3 rounded-lg border border-accent-color/30 animate-fade-in">
+                                            <p className="text-[10px] text-accent-color uppercase font-bold mb-1">Registro de Deuda</p>
+                                            <p className="text-xs text-text-secondary">Esta venta se sumará a la cuenta de <span className="text-white font-bold">{selectedUser.name}</span>.</p>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="flex justify-between items-center">
