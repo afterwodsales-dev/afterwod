@@ -122,8 +122,7 @@ export default function Login() {
                             rel="noopener noreferrer"
                             className="mt-4 flex items-center justify-center gap-2 text-[10px] font-bold text-[var(--accent-color)] hover:text-white transition-colors animate-pulse"
                         >
-                            <span>Designed by Gualguanosky</span>
-                            <span>❤️</span>
+                            <span>Designed with ❤️ by Gualguanosky</span>
                         </a>
                     </div>
                 </div>

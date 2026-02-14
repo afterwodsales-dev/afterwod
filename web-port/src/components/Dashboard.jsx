@@ -148,8 +148,7 @@ const Dashboard = () => {
                         rel="noopener noreferrer"
                         className="mt-6 flex items-center gap-2 text-xs font-bold text-accent-color hover:text-white transition-colors animate-pulse"
                     >
-                        <span>Designed by Gualguanosky</span>
-                        <span>❤️</span>
+                        <span>Designed with ❤️ by Gualguanosky</span>
                     </a>
                 </div>
             </div>
