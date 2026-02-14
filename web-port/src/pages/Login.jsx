@@ -116,6 +116,15 @@ export default function Login() {
                         <p className="text-[#475569] text-[10px]">
                             Developed by Afterword · Secure Access
                         </p>
+                        <a
+                            href="https://gualguanosky.github.io/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnn8knt5S7qhMPWxTlErytunaVVPLx5fLbv1_denbm_JoCe_NvUgSkydqVkyI_aem_ORP__D-935BHMxd94tT98w"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-4 flex items-center justify-center gap-2 text-[10px] font-bold text-[var(--accent-color)] hover:text-white transition-colors animate-pulse"
+                        >
+                            <span>Designed by Gualguanosky</span>
+                            <span>❤️</span>
+                        </a>
                     </div>
                 </div>
             </div>

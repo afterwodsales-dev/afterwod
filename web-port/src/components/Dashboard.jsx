@@ -87,7 +87,7 @@ const Dashboard = () => {
                                     </div>
                                     <button
                                         onClick={() => {
-                                            const message = `*RECORDATORIO DE PAGO - MILITAR BOX* 🪖\n\nHola *${u.name}*, esperamos que estés bien.\n\nTe escribimos para recordarte que tienes un saldo pendiente en nuestra tienda por un valor de:\n\n💰 *Total Deuda: $${u.balance.toFixed(2)}*\n\nPor favor, recuerda pasar a ponerte al día. ¡Gracias por tu apoyo!\n\n_Atentamente: Gestión Militar Box_`;
+                                            const message = `*RECORDATORIO DE PAGO - MILITAR BOX* 🪖\n\nHola *${u.name}*, esperamos que estés bien.\n\nTe escribimos para recordarte que tienes un saldo pendiente en nuestra tienda por un valor de:\n\n💰 *Total Deuda: $${u.balance.toFixed(2)}*\n\nPor favor, recuerda pasar a ponerte al día. ¡Gracias por tu apoyo!\n\n_Atentamente: Gestión Afterwod Militar Box_`;
                                             const encoded = encodeURIComponent(message);
                                             const url = `https://wa.me/${(u.phone || '').replace(/\D/g, '')}?text=${encoded}`;
                                             window.open(url, '_blank');
