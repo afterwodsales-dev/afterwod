@@ -5,5 +5,5 @@ import react from '@vitejs/plugin-react'
 // Base path configured for GitHub Pages deployment
 export default defineConfig({
   plugins: [react()],
-  base: '/afterwod/',
+  base: '/',
 })
