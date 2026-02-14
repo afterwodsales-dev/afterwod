@@ -23,7 +23,7 @@ const Dashboard = () => {
                 <div className="militar-card flex items-center justify-between group hover:border-success-color transition-colors p-4 md:p-6">
                     <div className="min-w-0">
                         <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Ingresos Hoy</p>
-                        <p className="text-2xl md:text-4xl font-header text-success-color truncate">${totalSales.toFixed(2)}</p>
+                        <p className="text-2xl md:text-4xl font-header text-success-color truncate">${(totalSales || 0).toFixed(2)}</p>
                     </div>
                     <div className="bg-success-color/10 p-3 md:p-4 rounded-full text-success-color shrink-0 ml-2">
                         <TrendingUp size={20} className="md:w-8 md:h-8" />
@@ -33,7 +33,7 @@ const Dashboard = () => {
                 <div className="militar-card flex items-center justify-between group hover:border-danger-color transition-colors p-4 md:p-6">
                     <div className="min-w-0">
                         <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Inv. Stock</p>
-                        <p className="text-2xl md:text-4xl font-header text-danger-color truncate">${totalPurchases.toFixed(2)}</p>
+                        <p className="text-2xl md:text-4xl font-header text-danger-color truncate">${(totalPurchases || 0).toFixed(2)}</p>
                     </div>
                     <div className="bg-danger-color/10 p-3 md:p-4 rounded-full text-danger-color shrink-0 ml-2">
                         <TrendingDown size={20} className="md:w-8 md:h-8" />
@@ -44,7 +44,7 @@ const Dashboard = () => {
                     <div className="min-w-0">
                         <p className="text-text-secondary text-[10px] md:text-sm font-bold uppercase mb-1 truncate">Balance Bruto</p>
                         <p className={`text-2xl md:text-4xl font-header truncate ${profit >= 0 ? 'text-accent-color' : 'text-danger-color'}`}>
-                            ${profit.toFixed(2)}
+                            ${(profit || 0).toFixed(2)}
                         </p>
                     </div>
                     <div className="bg-accent-color/10 p-3 md:p-4 rounded-full text-accent-color shrink-0 ml-2">
@@ -65,9 +65,9 @@ const Dashboard = () => {
                             <div key={stat.id} className="flex justify-between items-center p-3 rounded bg-white/5 group hover:bg-white/10 transition-colors">
                                 <span className="font-semibold text-sm md:text-base truncate max-w-[50%]">{stat.name}</span>
                                 <div className="text-right">
-                                    <p className="font-header text-base md:text-lg">${stat.totalBought.toFixed(2)}</p>
+                                    <p className="font-header text-base md:text-lg">${(stat.totalBought || 0).toFixed(2)}</p>
                                     <p className={`text-[9px] md:text-[10px] font-bold uppercase ${stat.balance > 0 ? 'text-danger-color' : 'text-success-color'}`}>
-                                        {stat.balance > 0 ? `DEUDA: $${stat.balance.toFixed(2)}` : 'AL DÍA'}
+                                        {stat.balance > 0 ? `DEUDA: $${(stat.balance || 0).toFixed(2)}` : 'AL DÍA'}
                                     </p>
                                 </div>
                             </div>

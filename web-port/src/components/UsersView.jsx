@@ -93,7 +93,7 @@ const UsersView = () => {
                                         </p>
                                     </td>
                                     <td className={`p-4 font-header text-2xl ${u.balance > 0 ? 'text-accent-color' : 'text-success-color'}`}>
-                                        ${u.balance.toFixed(2)}
+                                        ${(u.balance || 0).toFixed(2)}
                                     </td>
                                     <td className="p-4 text-right">
                                         <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -143,7 +143,7 @@ const UsersView = () => {
                                 <div className="text-right">
                                     <p className="text-[10px] text-text-secondary uppercase">Saldo</p>
                                     <p className={`font-header text-2xl ${u.balance > 0 ? 'text-accent-color' : 'text-success-color'}`}>
-                                        ${u.balance.toFixed(2)}
+                                        ${(u.balance || 0).toFixed(2)}
                                     </p>
                                 </div>
                             </div>
@@ -213,7 +213,7 @@ const UsersView = () => {
                 <form onSubmit={handlePayment} className="space-y-6 text-center">
                     <div className="mb-8">
                         <p className="text-text-secondary uppercase text-xs font-bold mb-2">Deuda Actual</p>
-                        <p className="text-5xl font-header text-accent-color">${selectedUser?.balance.toFixed(2)}</p>
+                        <p className="text-5xl font-header text-accent-color">${(selectedUser?.balance || 0).toFixed(2)}</p>
                     </div>
 
                     <div className="text-left space-y-4">

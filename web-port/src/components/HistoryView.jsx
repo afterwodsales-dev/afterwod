@@ -62,7 +62,7 @@ const HistoryView = () => {
                                     </td>
                                     <td className="p-4 font-semibold">{h.detail}</td>
                                     <td className="p-4 text-text-secondary">{h.info}</td>
-                                    <td className="p-4 font-header text-lg">${h.amount.toFixed(2)}</td>
+                                    <td className="p-4 font-header text-lg">${(h.amount || 0).toFixed(2)}</td>
                                     <td className="p-4 text-xs text-text-secondary">
                                         {new Date(h.date).toLocaleString()}
                                     </td>
@@ -103,7 +103,7 @@ const HistoryView = () => {
                             <p className="text-xs text-text-secondary mb-3">{h.info}</p>
 
                             <div className="text-right border-t border-white/5 pt-2">
-                                <p className="font-header text-xl">${h.amount.toFixed(2)}</p>
+                                <p className="font-header text-xl">${(h.amount || 0).toFixed(2)}</p>
                             </div>
                         </div>
                     ))}

@@ -123,7 +123,7 @@ const InventoryView = () => {
                                         {p.name} <br />
                                         <span className="text-[10px] text-text-secondary uppercase">{p.type}</span>
                                     </td>
-                                    <td className="p-4">${p.price.toFixed(2)}</td>
+                                    <td className="p-4">${(p.price || 0).toFixed(2)}</td>
                                     <td className="p-4">
                                         <span className={`w-2 h-2 inline-block rounded-full mr-2 ${p.stock > 10 ? 'bg-success-color' : 'bg-danger-color'}`}></span>
                                         {p.stock} <span className="text-xs text-text-secondary">({p.unit})</span>
@@ -168,7 +168,7 @@ const InventoryView = () => {
                                     <span className="text-[10px] text-text-secondary uppercase bg-white/5 px-2 py-0.5 rounded">{p.type}</span>
                                 </div>
                                 <div className="text-right">
-                                    <p className="font-header text-xl text-accent-color">${p.price.toFixed(2)}</p>
+                                    <p className="font-header text-xl text-accent-color">${(p.price || 0).toFixed(2)}</p>
                                 </div>
                             </div>
 

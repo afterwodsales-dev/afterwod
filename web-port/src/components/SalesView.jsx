@@ -103,7 +103,7 @@ const SalesView = () => {
                                             {p.type.split(' ')[1] || 'SIMPLE'}
                                         </div>
                                         <p className="font-semibold mb-1 truncate pr-6 text-sm md:text-base">{p.name}</p>
-                                        <p className="text-lg font-header text-accent-color">${p.price.toFixed(2)}</p>
+                                        <p className="text-lg font-header text-accent-color">${(p.price || 0).toFixed(2)}</p>
                                         <p className="text-xs text-text-secondary">Stock: {p.stock}</p>
                                     </button>
                                 ))}
@@ -123,10 +123,10 @@ const SalesView = () => {
                                 <div key={item.id} className="flex justify-between items-center mb-3 p-2 bg-white/5 rounded">
                                     <div>
                                         <p className="font-semibold text-sm">{item.name}</p>
-                                        <p className="text-xs text-text-secondary">{item.qty} x ${item.price.toFixed(2)}</p>
+                                        <p className="text-xs text-text-secondary">{item.qty} x ${(item.price || 0).toFixed(2)}</p>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <span className="font-header text-accent-color">${(item.price * item.qty).toFixed(2)}</span>
+                                        <span className="font-header text-accent-color">${((item.price || 0) * item.qty).toFixed(2)}</span>
                                         <button
                                             onClick={() => removeFromCart(item.id)}
                                             className="text-danger-color p-1 hover:bg-danger-color/10 rounded"
@@ -155,14 +155,14 @@ const SalesView = () => {
                                 >
                                     <option value="">Venta al Público (Contado)</option>
                                     {users.map(u => (
-                                        <option key={u.id} value={u.id}>{u.name} (Saldo: ${u.balance.toFixed(2)})</option>
+                                        <option key={u.id} value={u.id}>{u.name} (Saldo: ${(u.balance || 0).toFixed(2)})</option>
                                     ))}
                                 </select>
                             </div>
 
                             <div className="flex justify-between items-center">
                                 <span className="text-text-secondary font-bold uppercase text-xs">Total</span>
-                                <span className="text-3xl font-header text-accent-color">${cartTotal.toFixed(2)}</span>
+                                <span className="text-3xl font-header text-accent-color">${(cartTotal || 0).toFixed(2)}</span>
                             </div>
 
                             <button
