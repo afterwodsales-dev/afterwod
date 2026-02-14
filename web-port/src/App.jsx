@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { StoreProvider } from './context/StoreContext';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
@@ -16,7 +16,7 @@ function App() {
   return (
     <StoreProvider>
       <AuthProvider>
-        <Router>
+        <HashRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
 
@@ -32,7 +32,7 @@ function App() {
               <Route path="/history" element={<HistoryView />} />
             </Route>
           </Routes>
-        </Router>
+        </HashRouter>
       </AuthProvider>
     </StoreProvider>
   );
