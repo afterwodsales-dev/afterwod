@@ -117,7 +117,7 @@ const Dashboard = () => {
                         <h3 className="text-lg md:text-xl font-header uppercase">Rendimiento por Cliente</h3>
                     </div>
                     <div className="space-y-4">
-                        {userStats.slice(0, 5).map(stat => (
+                        {(userStats || []).slice(0, 5).map(stat => (
                             <div key={stat.id} className="flex justify-between items-center p-3 rounded bg-white/5 group hover:bg-white/10 transition-colors">
                                 <span className="font-semibold text-sm md:text-base truncate max-w-[50%]">{stat.name}</span>
                                 <div className="text-right">
