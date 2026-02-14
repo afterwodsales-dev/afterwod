@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { StoreProvider } from './context/StoreContext';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
@@ -31,6 +31,9 @@ function App() {
               <Route path="/users" element={<UsersView />} />
               <Route path="/history" element={<HistoryView />} />
             </Route>
+
+            {/* Catch-all route */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </HashRouter>
       </AuthProvider>
